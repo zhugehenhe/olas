@@ -12,3 +12,5 @@ export const registerUser = (params) =>
 
 export const registerLawyer = (params) =>
 	request.post("/Login/RegisterLawyer", params);
+
+export const getUserInfo = () => request.get("/SysUser/GetTokenUserInfo");
