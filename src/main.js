@@ -3,7 +3,7 @@ import './style.css'
 import App from './App.vue'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
-import router from './router'
+import router from './router/index'
 import pinia from './store' 
 
 
