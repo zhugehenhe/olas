@@ -2,6 +2,7 @@
 import { ElMessage } from "element-plus";
 import { getPhoneCode, loginPhone } from "../../api";
 import image from "@/assets/image";
+import router from "@/router";
 const { loginbg } = image;
 let loginCode = reactive({
   phone: "",
@@ -30,6 +31,7 @@ const login = () => {
         type: "success",
         message: "登录成功",
       });
+      router.push("/home");
       localStorage.setItem("token", res.data);
     } else {
       ElMessage({

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ElMessage } from "element-plus";
+import router from "@/router";
 
 const instance = axios.create({
 	withCredentials: false, //跨域请求时是否携带凭证信息
@@ -17,7 +18,6 @@ axios.defaults.headers = {
 };
 //请求拦截器
 instance.interceptors.request.use((config) => {
-	console.log("请求参数：", config);
 	if (config.headers.Authorization == "") {
 		const token = localStorage.getItem("token");
 		config.headers.Authorization = "Bearer " + token;
@@ -25,13 +25,20 @@ instance.interceptors.request.use((config) => {
 	return config;
 });
 //响应拦截器
-instance.interceptors.response.use((response) => {
-	console.log("响应参数：", response);
-	if (response.data.status == 401) {
-		ElMessage.error("登录已过期，请重新登录");
-		localStorage.clear();
+instance.interceptors.response.use(
+	(response) => {
+		return response.data;
+	},
+	(error) => {
+		// 处理错误
+		console.log("响应错误：", error);
+		if (error.response.data.status == 401) {
+			ElMessage.error("登录已过期，请重新登录");
+			localStorage.clear();
+			router.push("/login");
+		}
+		return Promise.reject(error);
 	}
-	return response.data;
-});
+);
 
 export default instance;

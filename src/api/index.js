@@ -1,5 +1,4 @@
 import request from "../utils/request";
-export const newGuid = () => request.get("/Consultation/NewGuid");
 export const getPhoneCode = (phone) =>
 	request.get("/Login/GetCode?phone=" + phone);
 
@@ -14,3 +13,138 @@ export const registerLawyer = (params) =>
 	request.post("/Login/RegisterLawyer", params);
 
 export const getUserInfo = () => request.get("/SysUser/GetTokenUserInfo");
+
+export const addArticle = (params) =>
+	request.post("/Article/AddArticle", params);
+
+export const addArticleHit = (params) =>
+	request.post("/Article/AddHit" + params);
+
+export const addArticlePraise = (params) =>
+	request.post("/Article/AddPraise" + params);
+
+export const deleteArticle = (params) =>
+	request.delete("/Article/DeleteArticle?id=" + params);
+
+export const getArticleDetail = (params) =>
+	request.get("/Article/GetArticleDetail?id=" + params);
+
+export const getArticleList = (params) =>
+	request.post("/Article/GetArticleList", params);
+
+export const getArticlePraise = () => request.get("/Article/GetArticlePraises");
+
+export const getCommentList = (params) =>
+	request.post("/Comment/GetCommentList", params);
+
+export const createConsulation = (params) =>
+	request.post("/Consultation/CreateConsultation", params);
+
+export const newGuid = () => request.get("/Consultation/NewGuid");
+
+export const getConsulationInfoList = (params) =>
+	request.post("/Consultation/GetConsultationInfoList", params);
+
+export const finishConsultation = (params) =>
+	request.put("/Consultation/FinishConsultation", params);
+
+export const getConsultationByUser = (params) =>
+	request.post("/Consultation/GetConsultationByUser", params);
+
+export const readConsulation = (params) =>
+	request.put("/Consultation/ReadConsultation", params);
+
+export const sendConsultation = (params) =>
+	request.post("/Consultation/SendConsultation", params);
+
+export const getEmailSetting = () => request.get("/Email/GetEmailSetting");
+
+export const sendEmailCode = (params) =>
+	request.post("/Email/SendEmailCode", params);
+
+export const updateEmailSetting = (params) =>
+	request.put("/Email/UpdateEmailSetting", params);
+
+export const addSection = (params) =>
+	request.post("/LawSection/AddSection", params);
+
+export const getSection = (params) =>
+	request.post("/LawSection/GetSection?id=" + params);
+export const getSections = () => request.post("/LawSection/GetSections");
+
+export const updateSection = (params) =>
+	request.put("/LawSection/UpdateSection", params);
+
+export const deleteSection = (params) =>
+	request.delete("/LawSection/DeleteSection?id=" + params);
+
+export const addLawyerPraise = (params) =>
+	request.post("/Lawyer/AddPraise", params);
+
+export const approve = (params) => request.put("/Lawyer/Approve", params);
+
+export const getLawyerInfo = (params) =>
+	request.get("/Lawyer/GetLawyerInfo?id=" + params);
+
+export const getLawyerInfoBySection = (params) =>
+	request.post("/Lawyer/GetLawyerInfoBySection", params);
+
+export const getLawyerPraise = (params) =>
+	request.get("/Lawyer/GetLawyerPraise?id=" + params);
+
+export const updateLawyerInfo = (params) =>
+	request.put("/Lawyer/UpdateLawyerInfo", params);
+
+export const getSysEx = (index, size) =>
+	request.get("/Logger/GetSysEx?pageIndex=" + index + "&pagesize=" + size);
+export const getSysLogOp = (index, size) =>
+	request.get("/Logger/GetSysLogOp?pageIndex=" + index + "&pagesize=" + size);
+
+export const addNotice = (params) => request.post("/Notice/AddNotice", params);
+
+export const getNotice = (params) =>
+	request.get("/Notice/GetNotice?id=" + params);
+
+export const getNoticeList = (index, size) =>
+	request.post(
+		"/Notice/GetNoticeList?pageIndex=" + index + "&pagesize=" + size
+	);
+
+export const updateNotice = (params) =>
+	request.put("/Notice/UpdateNotice", params);
+
+export const deleteNotice = (params) =>
+	request.delete("/Notice/DeleteNotice?id=" + params);
+
+export const addPostHit = (params) => request.post("/Post/AddHit", params);
+
+export const addPostPraise = (params) =>
+	request.post("/Post/AddPraise", params);
+
+export const postSubmit = (params) => request.post("/Post/PostSubmit", params);
+
+export const getLawyerReplyPostList = (params) =>
+	request.post("/Post/GetLawyerReplyPostList", params);
+
+export const getPostDetail = (params) =>
+	request.get("/Post/GetPostDetail?id=" + params);
+
+export const getPostList = (params) =>
+	request.post("/Post/GetPostList", params);
+
+export const getPostPraise = () => request.get("/Post/GetPraises");
+
+export const getRegionProvince = () =>
+	request.get("/SysRegion/GetRegionProvinces");
+
+export const editUserInfo = (params) =>
+	request.put("/SysUser/EditUserInfo", params);
+
+export const editUserPwd = (params) =>
+	request.put("/SysUser/EditUserPwd", params);
+
+export const findUserPwd = (params) =>
+	request.put("/SysUser/FindUserPwd", params);
+
+export const updateNickName = (params) =>
+	request.put("/SysUser/UpdateNickName", params);

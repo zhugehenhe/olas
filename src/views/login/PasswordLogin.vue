@@ -1,6 +1,7 @@
 <script setup>
 import { login } from "../../api";
 import image from "@/assets/image";
+import router from "@/router";
 const { loginbg } = image;
 let loginUser = reactive({
   userName: "",
@@ -15,6 +16,7 @@ const Login = () => {
         message: "登录成功",
       });
       localStorage.setItem("token", res.data);
+      router.push("/home");
     } else {
       ElMessage({
         type: "error",
