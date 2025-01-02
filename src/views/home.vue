@@ -1,6 +1,11 @@
-<script>
+<script setup>
+import { getRegionProvince } from "@/api";
+
+onMounted(() => {
+  getRegionProvince();
+});
 </script>
-<template>123</template>
+<template></template>
 
 <style>
 </style>

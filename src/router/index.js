@@ -12,16 +12,16 @@ const routes = [
 		component: () => import("@/views/login/index.vue"),
 	},
 	{
-		path: "/home",
-		name: "home",
+		path: "/OLAS",
+		name: "OLAS",
 		component: () => import("@/views/index.vue"),
 		children: [
 			{
 				path: "/home",
-				redirect: "/home/index",
+				redirect: "/OLAS/index",
 			},
 			{
-				path: "/home/index",
+				path: "/OLAS/index",
 				name: "homeIndex",
 				component: () => import("@/views/home.vue"),
 			},
