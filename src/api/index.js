@@ -68,9 +68,9 @@ export const updateEmailSetting = (params) =>
 export const addSection = (params) =>
 	request.post("/LawSection/AddSection", params);
 
-export const getSection = (params) =>
+export const getSectionById = (params) =>
 	request.post("/LawSection/GetSection?id=" + params);
-export const getSections = () => request.post("/LawSection/GetSections");
+export const getSections = () => request.get("/LawSection/GetSections");
 
 export const updateSection = (params) =>
 	request.put("/LawSection/UpdateSection", params);

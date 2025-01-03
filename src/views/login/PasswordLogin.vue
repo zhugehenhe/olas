@@ -1,7 +1,9 @@
 <script setup>
-import { login } from "../../api";
+import { login, getUserInfo } from "../../api";
 import image from "@/assets/image";
 import router from "@/router";
+import { userStore } from "../../store";
+const user = userStore();
 const { loginbg } = image;
 let loginUser = reactive({
   userName: "",
@@ -16,7 +18,12 @@ const Login = () => {
         message: "登录成功",
       });
       localStorage.setItem("token", res.data);
-      router.push("/home");
+      getUserInfo().then((res) => {
+        user.updateUserInfo(res.data);
+        if (res.status == 200) {
+          router.push("/OLAS/index");
+        }
+      });
     } else {
       ElMessage({
         type: "error",

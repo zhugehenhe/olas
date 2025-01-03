@@ -1,8 +1,10 @@
 <script setup>
 import { ElMessage } from "element-plus";
-import { getPhoneCode, loginPhone } from "../../api";
+import { getPhoneCode, loginPhone, getUserInfo } from "../../api";
 import image from "@/assets/image";
 import router from "@/router";
+import { userStore } from "../../store";
+const user = userStore();
 const { loginbg } = image;
 let loginCode = reactive({
   phone: "",
@@ -31,8 +33,13 @@ const login = () => {
         type: "success",
         message: "登录成功",
       });
-      router.push("/home");
       localStorage.setItem("token", res.data);
+      getUserInfo().then((res) => {
+        user.updateUserInfo(res.data);
+        if (res.status == 200) {
+          router.push("/OLAS/index");
+        }
+      });
     } else {
       ElMessage({
         type: "error",

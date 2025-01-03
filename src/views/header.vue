@@ -10,6 +10,7 @@ const handleSelect = (key, keyPath) => {
     class="el-menu-demo"
     mode="horizontal"
     :ellipsis="false"
+    style="width: 1180px; margin: 0 auto"
     @select="handleSelect"
   >
     <el-menu-item index="0">
