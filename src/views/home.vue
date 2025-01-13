@@ -47,7 +47,9 @@ onMounted(() => {
       </el-popover>
     </div>
     <div class="article">
-      <a target="_blank" class="page-top-card">{{ articles[0].title }}</a>
+      <template v-if="articles.length">
+        <a target="_blank" class="page-top-card">{{ articles[0].title }}</a>
+      </template>
       <div class="white_box">
         <div class="article_top">最新文章</div>
         <ul class="article_list">
@@ -157,10 +159,10 @@ onMounted(() => {
 .top {
   margin: 0px auto;
   display: flex;
-  width: 1200px;
+  width: 1250px;
   justify-content: space-between;
   .siderbar {
-    width: 300px;
+    width: 320px;
     background-color: #fff;
     border-radius: 10px;
     padding: 10px;
@@ -260,7 +262,7 @@ onMounted(() => {
   }
   .lawyer {
     background-color: #fff;
-    width: 280px;
+    width: 300px;
     border-radius: 6px;
     .lawyer-top {
       line-height: 86px;

@@ -1,6 +1,8 @@
 <script setup>
-import Header from "./header.vue";
-import Title from "./title.vue";
+// import Header from "./header.vue";
+// import Title from "./title.vue";
+const Header = defineAsyncComponent(() => import("./header.vue"));
+const Title = defineAsyncComponent(() => import("./title.vue"));
 </script>
 <template>
   <div class="common-layout">
