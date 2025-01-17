@@ -2,10 +2,14 @@
 import { getSections, getLatestArticles, getHotLawyer } from "@/api";
 import { ref } from "vue";
 import image from "../assets/image";
+import router from "../router";
 const { top_card_bg } = image;
 const sections = ref([]);
 const hotArticles = ref([]);
 const hotLawyer = ref([]);
+const toSection = (id) => {
+  router.push({ name: "Section", query: { id: id } });
+};
 onMounted(() => {
   getSections().then((res) => {
     sections.value = res.data;
@@ -36,7 +40,7 @@ onMounted(() => {
             </div>
             <div class="item_content">
               <template v-for="(child, index) in item.children" :key="child.id">
-                <span v-if="index < 4">{{ child.sectionName }}</span>
+                <span v-if="index < 4" @click="toSection(child.id)">{{ child.sectionName }}</span>
               </template>
             </div>
           </div>

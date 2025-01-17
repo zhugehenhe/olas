@@ -12,23 +12,20 @@ const handleSelect = (key, keyPath) => {
     :ellipsis="false"
     style="width: 1180px; margin: 0 auto"
     @select="handleSelect"
+    router
   >
-    <el-menu-item index="0">
-      <el-icon size="100"><House /></el-icon>
+    <el-menu-item index="1" route="/home">
+      <el-icon size="150"><House /></el-icon>
     </el-menu-item>
-    <el-menu-item index="1">Processing Center</el-menu-item>
+    <el-menu-item index="1" route="/home">首页</el-menu-item>
     <el-sub-menu index="2">
-      <template #title>Workspace</template>
-      <el-menu-item index="2-1">item one</el-menu-item>
-      <el-menu-item index="2-2">item two</el-menu-item>
-      <el-menu-item index="2-3">item three</el-menu-item>
-      <el-sub-menu index="2-4">
-        <template #title>item four</template>
-        <el-menu-item index="2-4-1">item one</el-menu-item>
-        <el-menu-item index="2-4-2">item two</el-menu-item>
-        <el-menu-item index="2-4-3">item three</el-menu-item>
-      </el-sub-menu>
+      <template #title>法律咨询</template>
+      <el-menu-item index="2-1">法律咨询</el-menu-item>
+      <el-menu-item index="2-2">快速问律师</el-menu-item>
+      <el-menu-item index="2-3">法律问答</el-menu-item>
     </el-sub-menu>
+    <el-menu-item index="3"> 找律师 </el-menu-item>
+    <el-menu-item index="4"> 合同范本下载 </el-menu-item>
   </el-menu>
 </template>
 

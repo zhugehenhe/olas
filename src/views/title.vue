@@ -22,10 +22,9 @@ onMounted(() => {
 <template>
   <div class="title">
     <div class="left_title">
-      <span>首页</span>
-      <span>法律咨询</span>
-      <span>找律师</span>
-      <span>法律知识</span>
+      <router-link to="/home">首页</router-link>
+      <router-link to="/home">法律咨询</router-link>
+      <router-link to="/home">找律师</router-link>
     </div>
     <div class="right_title">
       <span v-if="!user.loginStatus">免费注册</span>
@@ -48,7 +47,7 @@ onMounted(() => {
 }
 .left_title {
   flex-grow: 1;
-  span {
+  a {
     margin: 0 10px;
     color: #666;
     font-size: 14px;
