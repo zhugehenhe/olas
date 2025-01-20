@@ -32,6 +32,16 @@ const routes = [
 				name: "Section",
 				component: () => import("@/views/LawyerSection/index.vue"),
 			},
+			{
+				path: "/OlAS/Consulation",
+				name: "Consulation",
+				component: () => import("@/views/Consultation/index.vue"),
+			},
+			{
+				path: "/OLAS/Ask",
+				name: "Ask",
+				component: () => import("@/views/Consultation/ask.vue"),
+			},
 		],
 	},
 ];
@@ -42,7 +52,6 @@ const router = createRouter({
 	routes,
 });
 router.beforeEach((to, from, next) => {
-	console.log(to);
 	if (to.meta.title) {
 		document.title = to.meta.title;
 	}

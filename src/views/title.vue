@@ -23,7 +23,7 @@ onMounted(() => {
   <div class="title">
     <div class="left_title">
       <router-link to="/home">首页</router-link>
-      <router-link to="/home">法律咨询</router-link>
+      <router-link to="/OlAS/Consulation">法律咨询</router-link>
       <router-link to="/home">找律师</router-link>
     </div>
     <div class="right_title">

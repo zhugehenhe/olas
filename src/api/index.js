@@ -25,6 +25,8 @@ export const getArticleList = (params) => request.post("/Article/GetArticleList"
 
 export const getArticlePraise = () => request.get("/Article/GetArticlePraises");
 
+export const getArticleHot = (params) => request.post("/Article/GetHotArticleList", params);
+
 export const getLatestArticles = () => request.get("/Article/GetLatestArticles");
 export const getCommentList = (params) => request.post("/Comment/GetCommentList", params);
 
@@ -50,7 +52,7 @@ export const updateEmailSetting = (params) => request.put("/Email/UpdateEmailSet
 
 export const addSection = (params) => request.post("/LawSection/AddSection", params);
 
-export const getSectionById = (params) => request.post("/LawSection/GetSection?id=" + params);
+export const getSectionById = (params) => request.get("/LawSection/GetSection?id=" + params);
 export const getSections = () => request.get("/LawSection/GetSections");
 
 export const updateSection = (params) => request.put("/LawSection/UpdateSection", params);
@@ -62,6 +64,8 @@ export const addLawyerPraise = (params) => request.post("/Lawyer/AddPraise", par
 export const approve = (params) => request.put("/Lawyer/Approve", params);
 
 export const getLawyerInfo = (params) => request.get("/Lawyer/GetLawyerInfo?id=" + params);
+
+export const getHotLawyerBySection = (params) => request.get("/Lawyer/GetHotLawyerBySection?SectionId=" + params);
 
 export const getLawyerInfoBySection = (params) => request.post("/Lawyer/GetLawyerInfoBySection", params);
 

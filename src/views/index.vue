@@ -20,7 +20,14 @@ const Title = defineAsyncComponent(() => import("./title.vue"));
   padding: 0;
 }
 .common-layout {
+  top: 0;
   height: 100vh;
+  position: fixed;
+  width: 100%;
+  overflow: auto;
   background-color: #f4f4f4;
+}
+.el-main {
+  overflow: hidden;
 }
 </style>

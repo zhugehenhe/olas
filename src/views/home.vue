@@ -25,14 +25,7 @@ onMounted(() => {
 <template>
   <div class="top">
     <div class="siderbar">
-      <el-popover
-        placement="right"
-        :title="item.sectionName"
-        :width="400"
-        v-for="item in sections"
-        :key="item.id"
-        trigger="hover"
-      >
+      <el-popover placement="right" :title="item.sectionName" :width="400" v-for="item in sections" :key="item.id" trigger="hover">
         <template #reference>
           <div class="section">
             <div class="item_title">
@@ -48,7 +41,7 @@ onMounted(() => {
         <template #default>
           <div class="item_all_content">
             <template v-for="child in item.children" :key="child.id">
-              <span>{{ child.sectionName }}</span>
+              <span @click="toSection(child.id)">{{ child.sectionName }}</span>
             </template>
           </div>
         </template>
@@ -76,18 +69,19 @@ onMounted(() => {
       <ul>
         <li class="top-lawyer-media-card" v-for="item in hotLawyer" :key="item.id">
           <a href="" target="_blank" class="lawyer-img-box">
-            <img :src="item.coverPhoto" alt="柴传程律师" class="lawyer-img" />
+            <img :src="item.coverPhoto" :alt="item.lawyerName + '律师'" class="lawyer-img" />
           </a>
           <div class="lawyer-msg">
             <a href="" target="_blank" class="name nowrap">{{ item.lawyerName }}律师</a>
             <div class="desc nowrap">{{ item.specialization }}</div>
             <div class="tel">{{ item.phone }}</div>
-            <a rel="nofollow" target="_blank" class="ask-btn btn">咨询我</a>
+            <router-link :to="{ path: '/OLAS/Ask', query: { id: item.id } }" rel="nofollow" target="_blank" class="ask-btn btn">咨询我</router-link>
           </div>
         </li>
       </ul>
     </div>
   </div>
+  <div class="home_content"></div>
 </template>
 
 <style lang="scss" scoped>
