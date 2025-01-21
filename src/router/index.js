@@ -1,6 +1,5 @@
 // src/router/index.js
 import { createRouter, createWebHistory } from "vue-router";
-import Title from "../views/title.vue";
 
 const routes = [
 	{
@@ -41,6 +40,11 @@ const routes = [
 				path: "/OLAS/Ask",
 				name: "Ask",
 				component: () => import("@/views/Consultation/ask.vue"),
+			},
+			{
+				path: "/OLAS/UserInfo",
+				name: "UserInfo",
+				component: () => import("@/views/UserInfo/index.vue"),
 			},
 		],
 	},

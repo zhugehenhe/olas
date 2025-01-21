@@ -1,8 +1,8 @@
 <script setup>
+import { userStore } from "../store";
+const user = userStore();
 const activeIndex = ref("1");
-const handleSelect = (key, keyPath) => {
-  console.log(key, keyPath);
-};
+const handleSelect = (key, keyPath) => {};
 </script>
 <template>
   <el-menu
@@ -10,7 +10,7 @@ const handleSelect = (key, keyPath) => {
     class="el-menu-demo"
     mode="horizontal"
     :ellipsis="false"
-    style="width: 1180px; margin: 0 auto"
+    style="width: 1250px; margin: 0 auto"
     @select="handleSelect"
     router
   >
@@ -26,6 +26,13 @@ const handleSelect = (key, keyPath) => {
     </el-sub-menu>
     <el-menu-item index="3"> 找律师 </el-menu-item>
     <el-menu-item index="4"> 合同范本下载 </el-menu-item>
+    <el-sub-menu index="5" v-if="user.loginStatus">
+      <template #title>个人中心</template>
+      <el-menu-item index="5-1" route="/OLAS/UserInfo"> 我的信息 </el-menu-item>
+      <el-menu-item index="5-2"> 咨询记录 </el-menu-item>
+      <el-menu-item index="5-4"> 我的评价 </el-menu-item>
+      <el-menu-item index="5-5"> 退出登录 </el-menu-item>
+    </el-sub-menu>
   </el-menu>
 </template>
 

@@ -104,6 +104,8 @@ export const getPostPraise = () => request.get("/Post/GetPraises");
 
 export const getRegionProvince = () => request.get("/SysRegion/GetRegionProvinces");
 
+export const getProvinceChild = () => request.get("/SysRegion/GetProvinceChild");
+
 export const editUserInfo = (params) => request.put("/SysUser/EditUserInfo", params);
 
 export const editUserPwd = (params) => request.put("/SysUser/EditUserPwd", params);
@@ -111,3 +113,11 @@ export const editUserPwd = (params) => request.put("/SysUser/EditUserPwd", param
 export const findUserPwd = (params) => request.put("/SysUser/FindUserPwd", params);
 
 export const updateNickName = (params) => request.put("/SysUser/UpdateNickName", params);
+
+export const uploadFile = (params) =>
+	request.post("/File/UploadFile", params, {
+		headers: {
+			Accept: "application/json",
+			"Content-Type": "multipart/form-data",
+		},
+	});

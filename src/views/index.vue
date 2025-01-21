@@ -28,6 +28,7 @@ const Title = defineAsyncComponent(() => import("./title.vue"));
   background-color: #f4f4f4;
 }
 .el-main {
+  min-width: 1250px;
   overflow: hidden;
 }
 </style>
