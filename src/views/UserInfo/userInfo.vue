@@ -1,6 +1,5 @@
 <script setup>
 import { ref, reactive, onMounted } from "vue";
-import { ElMessage } from "element-plus";
 import { getUserInfo, uploadFile, getProvinceChild, editUserInfo } from "../../api";
 
 const loading = ref(false);
@@ -101,14 +100,7 @@ const submitForm = () => {
     <h2>个人信息</h2>
     <el-form :model="user" :rules="rules" ref="form" label-width="100px">
       <el-form-item label="头像">
-        <el-upload
-          :disabled="disabled"
-          v-loading="loading"
-          :show-file-list="false"
-          action=""
-          :http-request="upload"
-          :before-upload="beforeUploadImg"
-        >
+        <el-upload :disabled="disabled" v-loading="loading" :show-file-list="false" action="" :http-request="upload" :before-upload="beforeUploadImg">
           <el-avatar v-if="user.avatar" :size="100" :src="user.avatar"></el-avatar>
         </el-upload>
       </el-form-item>

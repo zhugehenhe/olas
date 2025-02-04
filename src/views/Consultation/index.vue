@@ -1,8 +1,33 @@
 <script setup>
 import { ref, watch } from "vue";
-
+import { consulation } from "../../api";
 const disabled = ref(true);
+import router from "../../router";
 const textarea = ref("");
+const ask = ref("");
+const lawyers = ref([]);
+const status = ref(0);
+
+const send = () => {
+  status.value = 1;
+  ask.value = textarea.value;
+  textarea.value = "";
+  consulation(ask.value).then((res) => {
+    if (res.status == 200) {
+      lawyers.value = res.data;
+      if (res.data.length == 0) {
+        status.value = 3;
+      } else {
+        status.value = 2;
+      }
+    } else {
+      ElMessage.error("发送失败");
+    }
+  });
+};
+const toAsk = (id) => {
+  router.push({ path: "/OLAS/Ask", query: { id: id } });
+};
 
 watch(
   () => textarea.value,
@@ -26,7 +51,7 @@ watch(
         <li class="item show">
           <div class="question_view">
             <div class="content">
-              <div class="desc">您好，我是快快，请问您遇到了什么问题？🤔</div>
+              <div class="desc">您好，请问您遇到了什么问题？🤔</div>
             </div>
             <div class="temp_box">
               <div class="nobox">
@@ -51,10 +76,10 @@ watch(
             </div>
           </div>
         </li>
-        <li class="item hide" data-out="1">
+        <li class="item" v-if="status !== 0">
           <div class="reply_con">
             <div class="content">
-              <div class="desc" id="questionVal"></div>
+              <div class="desc">{{ ask }}</div>
             </div>
             <div class="temp_box none">
               <div class="nobox">
@@ -63,27 +88,23 @@ watch(
             </div>
           </div>
         </li>
-        <li class="item hide" data-out="1000">
+        <li class="item" v-if="status === 1">
           <div class="question_view">
             <div class="content">
               <div class="desc">已收到您的咨询，正在为您匹配律师。</div>
             </div>
             <div class="temp_box">
               <div class="nobox">
-                <img
-                  src="//pic2.lawtimeimg.com/images/ask/fabu/v5/lawtime_user1.png?v=1737085163"
-                  alt=""
-                  class="temp"
-                />
+                <img src="//pic2.lawtimeimg.com/images/ask/fabu/v5/lawtime_user1.png?v=1737085163" alt="" class="temp" />
               </div>
             </div>
           </div>
         </li>
-        <li class="item hide" data-out="3000">
+        <li class="item" v-if="status === 2">
           <div class="question_view">
             <div class="content">
               <div class="desc w320">
-                已有律师准备解答，点击下方“立即使用”按钮支付后可开始咨询。
+                已为您匹配到律师，点击下方“律师头像或信息”后可开始咨询。
                 <div class="nlawyer_box">
                   <div class="swiper-container nlawyer_siwper"></div>
                 </div>
@@ -91,28 +112,48 @@ watch(
             </div>
             <div class="temp_box">
               <div class="nobox">
-                <img
-                  src="//pic2.lawtimeimg.com/images/ask/fabu/v5/lawtime_user1.png?v=1737085163"
-                  alt=""
-                  class="temp"
-                />
+                <img src="//pic2.lawtimeimg.com/images/ask/fabu/v5/lawtime_user1.png?v=1737085163" alt="" class="temp" />
               </div>
             </div>
           </div>
         </li>
-        <li class="item hide" data-out="16000">
+        <template v-for="(item, index) in lawyers" key="index">
+          <li class="item" v-if="status === 2">
+            <div class="question_view" @click="toAsk(item.id)">
+              <div class="content">
+                <div class="desc w320">
+                  {{ item.lawyerName }}律师 擅长领域:{{ item.specialization }}
+                  <div class="nlawyer_box">
+                    <div class="swiper-container nlawyer_siwper"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="temp_box">
+                <div class="nobox">
+                  <img :src="item.CoverPhoto" alt="" class="temp" />
+                </div>
+              </div>
+            </div>
+          </li>
+        </template>
+
+        <li class="item" v-if="status === 3">
           <div class="question_view">
             <div class="content">
-              <div class="desc">我已分析案情，使用服务立即开始咨询，未解答100%退款</div>
+              <div class="desc w320">
+                抱歉，未匹配到律师，请重新描述您的问题
+                <div class="nlawyer_box">
+                  <div class="swiper-container nlawyer_siwper"></div>
+                </div>
+              </div>
             </div>
             <div class="temp_box">
               <div class="nobox">
-                <img src="//att1.lawtimeimg.com/photo/1731476622218_300wh300.jpg" alt="" class="temp defaultImg" />
+                <img src="//pic2.lawtimeimg.com/images/ask/fabu/v5/lawtime_user1.png?v=1737085163" alt="" class="temp" />
               </div>
             </div>
           </div>
         </li>
-        <li id="bot"></li>
       </ul>
     </div>
     <div class="c_input">
@@ -130,7 +171,7 @@ watch(
         type="textarea"
       />
       <div class="submit-b">
-        <el-button type="primary" :disabled="disabled">发送</el-button>
+        <el-button type="primary" :disabled="disabled" @click="send">发送</el-button>
       </div>
     </div>
   </div>
@@ -145,7 +186,7 @@ watch(
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-  height: 560px;
+  height: 760px;
   width: 860px;
   border-radius: 20px;
   background-color: #fff;
@@ -201,6 +242,13 @@ watch(
         flex-direction: row-reverse;
         .content {
           padding-right: 214px;
+          .desc {
+            max-width: 487px;
+            background: #fff;
+            &:after {
+              left: -12px;
+            }
+          }
         }
       }
       .desc {
@@ -230,17 +278,32 @@ watch(
           border-color: transparent #fff transparent transparent;
         }
       }
+      .reply_con {
+        position: relative;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        text-align: right;
+        .desc {
+          background: #fffbee;
+          color: #111;
+          text-align: left;
+
+          &:after {
+            right: -12px;
+            border-color: transparent transparent transparent #fffbee;
+          }
+        }
+      }
       .content {
         -webkit-box-flex: 1;
         flex: 1;
         padding: 0 20px;
         position: relative;
-        .desc {
-          max-width: 487px;
-          background: #fff;
-          &:after {
-            left: -12px;
-          }
+      }
+      .none {
+        &:after {
+          display: none;
         }
       }
       .temp_box {

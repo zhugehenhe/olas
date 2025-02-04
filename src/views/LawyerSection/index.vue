@@ -79,7 +79,7 @@ onMounted(() => {
         <el-card shadow="never">
           <template #header>
             <div class="card-header">
-              <span>最新咨询</span>
+              <span>最新帖子</span>
             </div>
           </template>
           <div class="consult_list">
@@ -120,13 +120,6 @@ onMounted(() => {
         <el-tabs type="border-card" :stretch="true">
           <el-tab-pane label="最新知识">
             <div class="knowledge_content" v-for="item in articleList.listData" :key="item.id">
-              <router-link to="" class="title">
-                {{ item.title }}
-              </router-link>
-            </div>
-          </el-tab-pane>
-          <el-tab-pane label="最新问答">
-            <div class="knowledge_content" v-for="item in postList.listData" :key="item.id">
               <router-link to="" class="title">
                 {{ item.title }}
               </router-link>

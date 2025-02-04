@@ -37,6 +37,7 @@ export const newGuid = () => request.get("/Consultation/NewGuid");
 export const getConsulationInfoList = (params) => request.post("/Consultation/GetConsultationInfoList", params);
 
 export const finishConsultation = (params) => request.put("/Consultation/FinishConsultation", params);
+export const reviews = (params) => request.post("/Consultation/Reviews", params);
 
 export const getConsultationByUser = (params) => request.post("/Consultation/GetConsultationByUser", params);
 
@@ -121,3 +122,7 @@ export const uploadFile = (params) =>
 			"Content-Type": "multipart/form-data",
 		},
 	});
+
+export const consulation = (params) => request.post("/Consultation/Consultation", params);
+
+export const getPostListByUserId = (params) => request.post("/Post/GetPostListByUserId", params);
