@@ -13,15 +13,16 @@ const page = ref({
   pageIndex: 1,
   pageSize: 10,
 });
+const goArticleDetail = (id) => {
+  router.push({ path: "/OLAS/Article", query: { id: id } });
+};
 
 onMounted(() => {
   page.value.id = route.query.id;
   getSectionById(page.value.id).then((res) => {
-    console.log(res);
     section.value = res.data;
   });
   getArticleList(page.value).then((res) => {
-    console.log(res);
     articleList.value = res.data;
   });
   getPostList(page.value).then((res) => {
@@ -29,11 +30,9 @@ onMounted(() => {
     postList.value = res.data;
   });
   getHotLawyerBySection(page.value.id).then((res) => {
-    console.log(res);
     lawyerList.value = res.data;
   });
   getArticleHot(page.value).then((res) => {
-    console.log(res);
     articleHot.value = res.data;
   });
 });
@@ -46,13 +45,19 @@ onMounted(() => {
         <el-card shadow="never">
           <template #header>
             <div class="card-header">
-              <span>{{ section.sectionName }}精选知识</span>
+              <span></span>
+              <div class="card-header-title">{{ section.sectionName }}精选知识</div>
+              <div class="card-header-more">
+                <router-link :to="{ path: '/OLAS/AllArticle', query: { id: section.id } }">
+                  <el-icon><Right /></el-icon> <span>所有知识</span></router-link
+                >
+              </div>
             </div>
           </template>
           <el-carousel motion-blur indicator-position="outside">
             <template v-for="(item, index) in articleHot.listData" :key="item.id">
               <el-carousel-item v-if="index < 4">
-                <div class="section_left_top_carousel">
+                <div class="section_left_top_carousel" @click="goArticleDetail(item.id)">
                   <div class="carousel_img">
                     <el-image :src="item.img" style="width: 360px; height: 240px" :fit="'fill'"> ></el-image>
                   </div>
@@ -79,38 +84,18 @@ onMounted(() => {
         <el-card shadow="never">
           <template #header>
             <div class="card-header">
-              <span>最新帖子</span>
+              <div class="card-header-title">最新帖子</div>
+              <div class="card-header-more">
+                <router-link :to="{ path: '/OLAS/AllPost', query: { id: section.id } }">
+                  <el-icon><Right /></el-icon> <span>所有帖子</span></router-link
+                >
+              </div>
             </div>
           </template>
-          <div class="consult_list">
-            <a class="link nowrap" href="https://www.lawtime.cn/ask/question_34254594.html" target="_blank"
-              >重新找了一个女人成家没有领结婚证 搬玉米喂猪削茯苓什么都搞着苦死苦活的钱有时候还不给 是不是要的给钱
-            </a>
-            <a class="link nowrap" href="https://www.lawtime.cn/ask/question_34254323.html" target="_blank"
-              >房子是男方父母拆迁安置房，由于面积啊不够，出钱买了一些面积，然后装修形成了债务离婚后债务属于夫妻共同债务吗？</a
-            >
-            <a class="link nowrap" href="https://www.lawtime.cn/ask/question_34253798.html" target="_blank">请问夫妻双方离婚女方债务怎么处理</a>
-            <a class="link nowrap" href="https://www.lawtime.cn/ask/question_34253244.html" target="_blank"
-              >女方隐瞒婚前债务20 婚后用彩礼，和男方家里钱偿还婚前债务，是否能够要求女方偿还</a
-            >
-            <a class="link nowrap" href="https://www.lawtime.cn/ask/question_34252962.html" target="_blank"
-              >双方有一子，深圳房产一套少量欠款，女方工作稳定，男方失业不分担经济负担?</a
-            >
-            <a class="link nowrap" href="https://www.lawtime.cn/ask/question_34252389.html" target="_blank"
-              >结婚后发现女方有精猜神方面的病，最后女方退彩礼十八，结婚光给女方现金3o多万，结婚三个月</a
-            >
-            <a class="link nowrap" href="https://www.lawtime.cn/ask/question_34252332.html" target="_blank"
-              >离婚前双方贷款，带完款没还然后离婚，担保人给还的，现在男方找不到可以起诉女方吗</a
-            >
-            <a class="link nowrap" href="https://www.lawtime.cn/ask/question_34250119.html" target="_blank"
-              >你好，2016年老公借贷，按老式婚姻法判夫妻有连带责任，现在能翻案吗</a
-            >
-            <a class="link nowrap" href="https://www.lawtime.cn/ask/question_34249416.html" target="_blank"
-              >我和我老婆结婚没有打结婚证，现在要分开对方不还彩礼，可以起诉吗？</a
-            >
-            <a class="link nowrap" href="https://www.lawtime.cn/ask/question_34248147.html" target="_blank"
-              >家里老公钱不给看病，我想离婚。查他的帐户能查到多少年的？</a
-            >
+          <div class="consult_list" v-for="item in postList.listData" :key="item.id">
+            <router-link class="link nowrap" :to="{ path: '/OLAS/Post', query: { id: item.id } }">{{
+              item.title
+            }}</router-link>
           </div>
         </el-card>
       </div>
@@ -120,7 +105,7 @@ onMounted(() => {
         <el-tabs type="border-card" :stretch="true">
           <el-tab-pane label="最新知识">
             <div class="knowledge_content" v-for="item in articleList.listData" :key="item.id">
-              <router-link to="" class="title">
+              <router-link :to="{ path: '/OLAS/Article', query: { id: item.id } }" class="title">
                 {{ item.title }}
               </router-link>
             </div>
@@ -134,15 +119,27 @@ onMounted(() => {
             >专业精选律师
           </p>
           <template v-if="lawyerList.length > 0">
-            <router-link :to="{ path: '/OLAS/Ask', query: { id: lawyerList[0].id } }" target="_blank" class="laywer_img">
+            <router-link
+              :to="{ path: '/OLAS/Ask', query: { id: lawyerList[0].id } }"
+              target="_blank"
+              class="laywer_img"
+            >
               <img :src="lawyerList[0].coverPhoto" :alt="lawyerList[0].lawyerName + '律师'" />
             </router-link>
-            <router-link :to="{ path: '/OLAS/Ask', query: { id: lawyerList[0].id } }" target="_blank" class="lawyer_name"
+            <router-link
+              :to="{ path: '/OLAS/Ask', query: { id: lawyerList[0].id } }"
+              target="_blank"
+              class="lawyer_name"
               >{{ lawyerList[0].lawyerName }}律师</router-link
             >
             <p class="lawyer_hobies">擅长<span class="lawyer_hobies_span">:</span>{{ lawyerList[0].specialization }}</p>
             <div class="lawyer_tel"><span class="tel_icon"></span>{{ lawyerList[0].phone }}</div>
-            <router-link :to="{ path: '/OLAS/Ask', query: { id: lawyerList[0].id } }" target="_blank" class="cb_askmy_btn">立即咨询</router-link>
+            <router-link
+              :to="{ path: '/OLAS/Ask', query: { id: lawyerList[0].id } }"
+              target="_blank"
+              class="cb_askmy_btn"
+              >立即咨询</router-link
+            >
           </template>
         </div>
       </div>
@@ -159,10 +156,22 @@ onMounted(() => {
     width: 800px;
     .section_left_top {
       .card-header {
-        font-size: 28px;
-        font-weight: 600;
-        line-height: 40px;
-        color: #333;
+        display: flex;
+        justify-content: space-between;
+        .card-header-title {
+          font-size: 28px;
+          font-weight: 600;
+          line-height: 40px;
+          color: #333;
+          flex-grow: 1;
+        }
+        .card-header-more {
+          font-size: 14px;
+          font-weight: 300;
+          line-height: 40px;
+          color: #5a5a5a;
+          cursor: pointer;
+        }
       }
       .section_left_top_carousel {
         padding: 20px 30px 30px;
@@ -203,10 +212,22 @@ onMounted(() => {
     .section_left_bottom {
       margin-top: 40px;
       .card-header {
-        font-size: 28px;
-        font-weight: 600;
-        line-height: 40px;
-        color: #333;
+        display: flex;
+        justify-content: space-between;
+        .card-header-title {
+          font-size: 28px;
+          font-weight: 600;
+          line-height: 40px;
+          color: #333;
+          flex-grow: 1;
+        }
+        .card-header-more {
+          font-size: 14px;
+          font-weight: 300;
+          line-height: 40px;
+          color: #5a5a5a;
+          cursor: pointer;
+        }
       }
       .consult_list {
         margin-top: 30px;
@@ -334,7 +355,8 @@ onMounted(() => {
             transform: translate(-50%, -50%);
             width: 18px;
             height: 20px;
-            background: url(https://pic2.lawtimeimg.com/images/v2/pc/zhishi/info/law_detail-sprite.png) -148px -65px / 237px no-repeat;
+            background: url(https://pic2.lawtimeimg.com/images/v2/pc/zhishi/info/law_detail-sprite.png) -148px -65px /
+              237px no-repeat;
           }
         }
         .cb_askmy_btn {

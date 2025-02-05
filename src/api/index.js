@@ -13,9 +13,9 @@ export const getUserInfo = () => request.get("/SysUser/GetTokenUserInfo");
 
 export const addArticle = (params) => request.post("/Article/AddArticle", params);
 
-export const addArticleHit = (params) => request.post("/Article/AddHit" + params);
+export const addArticleHit = (params) => request.post("/Article/AddHit", params);
 
-export const addArticlePraise = (params) => request.post("/Article/AddPraise" + params);
+export const addArticlePraise = (params) => request.post("/Article/AddPraise", params);
 
 export const deleteArticle = (params) => request.delete("/Article/DeleteArticle?id=" + params);
 
@@ -23,7 +23,9 @@ export const getArticleDetail = (params) => request.get("/Article/GetArticleDeta
 
 export const getArticleList = (params) => request.post("/Article/GetArticleList", params);
 
-export const getArticlePraise = () => request.get("/Article/GetArticlePraises");
+export const getArticlePraiseList = () => request.get("/Article/GetPraises");
+
+export const getArticlePraise = (params) => request.get("/Article/GetArticlePraise?id=" + params);
 
 export const getArticleHot = (params) => request.post("/Article/GetHotArticleList", params);
 
@@ -101,7 +103,12 @@ export const getPostDetail = (params) => request.get("/Post/GetPostDetail?id=" +
 
 export const getPostList = (params) => request.post("/Post/GetPostList", params);
 
-export const getPostPraise = () => request.get("/Post/GetPraises");
+export const deletePost = (params) => request.delete("/Post/DeletePost?id=" + params);
+
+export const addPostComment = (params) => request.post("/Post/AddPostComment", params);
+export const getPostPraiseList = () => request.get("/Post/GetPraises");
+
+export const getPostPraise = (params) => request.get("/Post/GetPostPraise?id=" + params);
 
 export const getRegionProvince = () => request.get("/SysRegion/GetRegionProvinces");
 

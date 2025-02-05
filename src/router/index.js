@@ -46,6 +46,26 @@ const routes = [
 				name: "UserInfo",
 				component: () => import("@/views/UserInfo/index.vue"),
 			},
+			{
+				path: "/OLAS/Post",
+				name: "Post",
+				component: () => import("@/views/Post/index.vue"),
+			},
+			{
+				path: "/OLAS/AllPost",
+				naem: "AllPost",
+				component: () => import("@/views/Post/allPost.vue"),
+			},
+			{
+				path: "/OLAS/Article",
+				name: "Article",
+				component: () => import("@/views/Article/index.vue"),
+			},
+			{
+				path: "/OLAS/AllArticle",
+				name: "AllArticle",
+				component: () => import("@/views/Article/allArticle.vue"),
+			},
 		],
 	},
 ];
