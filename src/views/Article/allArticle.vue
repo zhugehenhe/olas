@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-table :data="data.listData" style="width: 100%">
+    <el-table :data="data.listData" style="width: 100%" @row-click="handleRowClick">
       <el-table-column label="封面" width="120">
         <template #default="scope">
           <el-image style="width: 80px; height: 80px" :src="scope.row.img" fit="cover"></el-image>
@@ -10,19 +10,13 @@
       <el-table-column prop="content" label="内容"></el-table-column>
       <el-table-column prop="user.userName" label="发布人" width="150"></el-table-column>
       <el-table-column prop="createDate" label="发布时间" width="150"></el-table-column>
-      <el-table-column label="评论/点赞/点击" width="200">
+      <el-table-column label="点赞数/查看数" width="200">
         <template #default="scope">
-          {{ scope.row.commentCount ? scope.row.commentCount : 0 }} /
-          {{ scope.row.hitCount ? scope.row.hitCount : 0 }} /
+          {{ scope.row.hits ? scope.row.hits : 0 }} /
           {{ scope.row.praiseLen ? scope.row.praiseLen : 0 }}
         </template>
       </el-table-column>
       <el-table-column prop="tag" label="板块" width="100"></el-table-column>
-      <el-table-column label="操作" width="150">
-        <template #default="scope">
-          <el-button type="primary" size="small" @click="handleView(scope.row.id)">查看</el-button>
-        </template>
-      </el-table-column>
     </el-table>
     <el-pagination
       @size-change="handleSizeChange"
@@ -74,6 +68,10 @@ const handleCurrentChange = (newPage) => {
 
 const handleView = (id) => {
   router.push({ path: "/OLAS/Article", query: { id: id } });
+};
+
+const handleRowClick = (row) => {
+  handleView(row.id);
 };
 
 onMounted(() => {

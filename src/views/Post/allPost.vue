@@ -2,24 +2,18 @@
   <div>
     <!-- 添加发布帖子按钮 -->
     <el-button type="success" size="small" @click="handleCreatePost">发布帖子</el-button>
-    <el-table :data="data.listData" style="width: 100%">
+    <el-table :data="data.listData" style="width: 100%" @row-click="handleRowClick">
       <el-table-column prop="title" label="标题" width="180"></el-table-column>
       <el-table-column prop="content" label="内容"></el-table-column>
       <el-table-column prop="user.userName" label="发布人"></el-table-column>
       <el-table-column prop="createTime" label="发布时间" width="180"></el-table-column>
       <el-table-column label="评论/点赞/点击" width="200">
         <template #default="scope">
-          {{ scope.row.commentCount ? scope.row.commentCount : 0 }} /
-          {{ scope.row.hitCount ? scope.row.hitCount : 0 }} /
+          {{ scope.row.commentCount ? scope.row.commentCount : 0 }} / {{ scope.row.hitCount ? scope.row.hitCount : 0 }} /
           {{ scope.row.praiseLen ? scope.row.praiseLen : 0 }}
         </template>
       </el-table-column>
       <el-table-column prop="section.sectionName" label="板块" width="100"></el-table-column>
-      <el-table-column label="操作" width="150">
-        <template #default="scope">
-          <el-button type="primary" size="small" @click="handleView(scope.row.id)">查看</el-button>
-        </template>
-      </el-table-column>
     </el-table>
     <el-pagination
       @size-change="handleSizeChange"
@@ -97,7 +91,9 @@ const handleCurrentChange = (newPage) => {
 const handleView = (id) => {
   router.push({ path: "/OLAS/Post", query: { id: id } });
 };
-
+const handleRowClick = (row) => {
+  handleView(row.id);
+};
 // 添加 handleCreatePost 方法
 const handleCreatePost = () => {
   dialogVisible.value = true;
