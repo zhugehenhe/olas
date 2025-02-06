@@ -11,9 +11,7 @@ const activeName = ref("User");
       <el-tab-pane label="个人信息" name="User"><UserInfo v-if="activeName === 'User'" /></el-tab-pane>
       <el-tab-pane label="我的帖子" name="MyPost"><MyPost v-if="activeName === 'MyPost'"></MyPost></el-tab-pane>
       <el-tab-pane label="修改密码" name="EditPwd"><EditPwd v-if="activeName === 'EditPwd'" /></el-tab-pane>
-      <el-tab-pane label="咨询记录" name="AskRecordVue"
-        ><AskRecordVue v-if="activeName === 'AskRecordVue'"
-      /></el-tab-pane>
+      <el-tab-pane label="我的咨询" name="AskRecordVue"><AskRecordVue v-if="activeName === 'AskRecordVue'" /></el-tab-pane>
     </el-tabs>
   </div>
 </template>

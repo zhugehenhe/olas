@@ -37,6 +37,11 @@ const routes = [
 				component: () => import("@/views/Consultation/index.vue"),
 			},
 			{
+				path: "/OLAS/Consulation/:id",
+				name: "ConsulationDetail",
+				component: () => import("@/views/Consultation/consulation.vue"),
+			},
+			{
 				path: "/OLAS/Ask",
 				name: "Ask",
 				component: () => import("@/views/Consultation/ask.vue"),

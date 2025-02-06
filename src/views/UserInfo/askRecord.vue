@@ -22,6 +22,7 @@
           >
             评价
           </el-button>
+          <el-button type="primary" size="small" @click="toView(scope.row)">查看</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -55,6 +56,7 @@
 
 <script setup>
 import { getConsultationByUser, reviews } from "../../api";
+import router from "../../router";
 const data = ref([]);
 const reviewDialogVisible = ref(false);
 const reviewForm = reactive({
@@ -99,6 +101,9 @@ const getStatusText = (status) => {
   }
 };
 
+const toView = (row) => {
+  router.push({ path: "/OLAS/Consulation/" + row.id });
+};
 const getStatusType = (status) => {
   switch (status) {
     case 0:
