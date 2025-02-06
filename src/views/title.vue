@@ -24,7 +24,7 @@ onMounted(() => {
     <div class="left_title">
       <router-link to="/home">首页</router-link>
       <router-link to="/OlAS/Consulation">法律咨询</router-link>
-      <router-link to="/home">找律师</router-link>
+      <router-link to="/OLAS/AllLawyer">找律师</router-link>
     </div>
     <div class="right_title">
       <span v-if="!user.loginStatus">免费注册</span>

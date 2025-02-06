@@ -74,6 +74,8 @@ export const getLawyerInfoBySection = (params) => request.post("/Lawyer/GetLawye
 
 export const getHotLawyer = () => request.get("/Lawyer/GetHotLawyer");
 
+export const getCount = (params) => request.post("/Lawyer/GetCount", params);
+
 export const getLawyerPraise = (params) => request.get("/Lawyer/GetLawyerPraise?id=" + params);
 
 export const updateLawyerInfo = (params) => request.put("/Lawyer/UpdateLawyerInfo", params);
