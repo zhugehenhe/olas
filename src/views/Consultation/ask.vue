@@ -1,6 +1,7 @@
 <script setup>
 import { useRoute } from "vue-router";
 import { getLawyerInfo, newGuid, createConsulation } from "../../api";
+import router from "../../router";
 const route = useRoute();
 const lid = ref(0);
 const info = ref({});
@@ -37,6 +38,9 @@ const send = () => {
     }
   });
 };
+const handleView = (id) => {
+  router.push({ path: "/OLAS/Lawyer", query: { id: id } });
+};
 onMounted(() => {
   lid.value = route.query.id;
   con.LawyerId = lid.value;
@@ -57,7 +61,7 @@ onMounted(() => {
           <div class="fix layer_box">
             <div class="l temp_box">
               <div class="temp">
-                <a href="https://www.lawtime.cn/lawyer/lll106926844106931938" target="_blank"
+                <a @click="handleView(info.id)" target="_blank"
                   ><img :src="info.coverPhoto" :alt="info.lawyerName + '律师'" class="img"
                 /></a>
               </div>
@@ -65,14 +69,19 @@ onMounted(() => {
             </div>
             <div class="t_desc">
               <div class="tl">
-                <a href="https://www.lawtime.cn/lawyer/lll106926844106931938" target="_blank">{{ info.lawyerName + "律师" }}</a>
+                <a @click="handleView(info.id)" target="_blank">{{ info.lawyerName + "律师" }}</a>
               </div>
               <div class="info">擅长： {{ info.specialization }}</div>
               <div class="area">服务地区： 全国</div>
             </div>
           </div>
           <div class="text_box">
-            <textarea name="content" v-model="con.ConsultationQuestions" class="textarea" placeholder="请说说您的问题（500字以内）"></textarea>
+            <textarea
+              name="content"
+              v-model="con.ConsultationQuestions"
+              class="textarea"
+              placeholder="请说说您的问题（500字以内）"
+            ></textarea>
           </div>
           <input type="hidden" name="stayphone" value="1" />
           <div class="btn_tr">

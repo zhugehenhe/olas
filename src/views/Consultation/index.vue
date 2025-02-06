@@ -21,6 +21,7 @@ const send = () => {
         status.value = 2;
       }
     } else {
+      status.value = 3;
       ElMessage.error("发送失败");
     }
   });
@@ -95,7 +96,11 @@ watch(
             </div>
             <div class="temp_box">
               <div class="nobox">
-                <img src="//pic2.lawtimeimg.com/images/ask/fabu/v5/lawtime_user1.png?v=1737085163" alt="" class="temp" />
+                <img
+                  src="//pic2.lawtimeimg.com/images/ask/fabu/v5/lawtime_user1.png?v=1737085163"
+                  alt=""
+                  class="temp"
+                />
               </div>
             </div>
           </div>
@@ -112,7 +117,11 @@ watch(
             </div>
             <div class="temp_box">
               <div class="nobox">
-                <img src="//pic2.lawtimeimg.com/images/ask/fabu/v5/lawtime_user1.png?v=1737085163" alt="" class="temp" />
+                <img
+                  src="//pic2.lawtimeimg.com/images/ask/fabu/v5/lawtime_user1.png?v=1737085163"
+                  alt=""
+                  class="temp"
+                />
               </div>
             </div>
           </div>
@@ -149,7 +158,11 @@ watch(
             </div>
             <div class="temp_box">
               <div class="nobox">
-                <img src="//pic2.lawtimeimg.com/images/ask/fabu/v5/lawtime_user1.png?v=1737085163" alt="" class="temp" />
+                <img
+                  src="//pic2.lawtimeimg.com/images/ask/fabu/v5/lawtime_user1.png?v=1737085163"
+                  alt=""
+                  class="temp"
+                />
               </div>
             </div>
           </div>

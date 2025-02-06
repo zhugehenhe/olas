@@ -66,6 +66,16 @@ const routes = [
 				name: "AllArticle",
 				component: () => import("@/views/Article/allArticle.vue"),
 			},
+			{
+				path: "/OLAS/Lawyer",
+				name: "Lawyer",
+				component: () => import("@/views/Lawyer/index.vue"),
+			},
+			{
+				path: "/OLAS/AllLawyer",
+				name: "AllLawyer",
+				component: () => import("@/views/Lawyer/allLaywer.vue"),
+			},
 		],
 	},
 ];

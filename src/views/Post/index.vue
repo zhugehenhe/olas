@@ -17,6 +17,8 @@
               <el-icon size="16" @click="praise" v-if="!postPraise.status"><Star /></el-icon>
               <el-icon size="16" @click="praise" v-else><StarFilled /></el-icon>
               <span class="read-count">点赞数{{ post.praiseLen }}</span>
+              <el-icon size="16"><ChatLineSquare /></el-icon>
+              <span class="read-count">评论数{{ post.commentCount }}</span>
             </div>
           </div>
         </div>
@@ -25,93 +27,67 @@
     <article class="baidu_pl">
       <div class="baidu_pl_content" v-html="post.content"></div>
     </article>
-    <div class="post_footer">
-      <div class="post_footer_left">
-        <a href="">
-          <img :src="post.user.avatar" :alt="post.user.userName" class="profile-img" />
-          <span class="profile-name"> {{ post.user.userName }} </span>
-        </a>
-      </div>
-      <div class="post_footer_right">
-        <div class="read-count-box">
-          <el-icon size="16"><View /></el-icon>
-          <span class="read-count">阅读量{{ post.hitCount }} </span>
-          <el-icon size="16" @click="praise" v-if="!postPraise.status"><Star /></el-icon>
-          <el-icon size="16" @click="praise" v-else><StarFilled /></el-icon>
-          <span class="read-count">点赞数{{ post.praiseLen }}</span>
-          <el-icon @click="drawerVisible = true"><ChatLineSquare /></el-icon>
-          <span class="read-count" @click="drawerVisible = true">评论数{{ post.commentCount }}</span>
-        </div>
-      </div>
-    </div>
   </div>
   <div class="post_comment">
-    <el-drawer size="40%" title="评论" v-model="drawerVisible">
-      <div class="comment_content">
-        <div class="comment-edit-box">
-          <div class="user-img">
-            <a href="https://blog.csdn.net/zhugehenhe" target="_blank">
-              <img src="https://profile-avatar.csdnimg.cn/default.jpg!1" />
-            </a>
-          </div>
+    <div class="comment_content">
+      <div class="comment-edit-box">
+        <div class="user-img">
+          <a href="https://blog.csdn.net/zhugehenhe" target="_blank">
+            <img src="https://profile-avatar.csdnimg.cn/default.jpg!1" />
+          </a>
+        </div>
 
-          <el-input
-            v-model="textarea"
-            maxlength="1000"
-            placeholder="请输入评论"
-            show-word-limit
-            size="large"
-            :rows="4"
-            type="textarea"
-          ></el-input>
-        </div>
-        <div class="comment-operate-box">
-          <el-button
-            size="small"
-            style="float: right; margin-top: 5px"
-            type="primary"
-            :disabled="disabled"
-            @click="send"
-            >发送</el-button
-          >
-        </div>
-        <div class="comment-list-container">
-          <div class="comment-list-box" v-for="item in comments.listData" :key="item.id">
-            <ul class="comment-list">
-              <li class="comment-line-box">
-                <div class="comment-list-item">
-                  <a class="comment-list-href" target="_blank"
-                    ><img :src="item.user.avatar" :alt="item.user.avatar" class="avatar"
-                  /></a>
-                  <div class="right-box">
-                    <div class="new-info-box clearfix">
-                      <div class="comment-top">
-                        <div class="user-box">
-                          <a class="name-href" target="_blank">
-                            <span class="name">{{ item.user.userName }}</span>
-                            <el-tag v-if="item.user.role == 2">律师</el-tag>
-                          </a>
-                          <span class="text" v-if="item.replyUser">回复</span
-                          ><span class="nick-name" v-if="item.replyUser">{{ item.replyUser.userName }}</span>
-                          <span class="date">{{ item.createTime }} </span>
-                          <div class="opt-comment">
-                            <el-icon size="16" @click="replyShow(item)"><ChatSquare /></el-icon
-                            ><a @click="replyShow(item)" class="btn-bt btn-reply">回复</a>
-                          </div>
+        <el-input
+          v-model="textarea"
+          maxlength="1000"
+          placeholder="请输入评论"
+          show-word-limit
+          size="large"
+          :rows="4"
+          type="textarea"
+        ></el-input>
+      </div>
+      <div class="comment-operate-box">
+        <el-button size="small" style="float: right; margin-top: 5px" type="primary" :disabled="disabled" @click="send"
+          >发送</el-button
+        >
+      </div>
+      <div class="comment-list-container">
+        <div class="comment-list-box" v-for="item in comments.listData" :key="item.id">
+          <ul class="comment-list">
+            <li class="comment-line-box">
+              <div class="comment-list-item">
+                <a class="comment-list-href" target="_blank"
+                  ><img :src="item.user.avatar" :alt="item.user.avatar" class="avatar"
+                /></a>
+                <div class="right-box">
+                  <div class="new-info-box clearfix">
+                    <div class="comment-top">
+                      <div class="user-box">
+                        <a class="name-href" target="_blank">
+                          <span class="name">{{ item.user.userName }}</span>
+                          <el-tag v-if="item.user.role == 2">律师</el-tag>
+                        </a>
+                        <span class="text" v-if="item.replyUser">回复</span
+                        ><span class="nick-name" v-if="item.replyUser">{{ item.replyUser.userName }}</span>
+                        <span class="date">{{ item.createTime }} </span>
+                        <div class="opt-comment">
+                          <el-icon size="16" @click="replyShow(item)"><ChatSquare /></el-icon
+                          ><a @click="replyShow(item)" class="btn-bt btn-reply">回复</a>
                         </div>
                       </div>
-                      <div class="comment-center">
-                        <div class="new-comment">{{ item.content }}</div>
-                      </div>
+                    </div>
+                    <div class="comment-center">
+                      <div class="new-comment">{{ item.content }}</div>
                     </div>
                   </div>
                 </div>
-              </li>
-            </ul>
-          </div>
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
-    </el-drawer>
+    </div>
     <el-dialog :title="'回复' + toReplyName" v-model="DialogVisible" width="30%">
       <el-form :model="ask" label-width="80px">
         <el-input type="textarea" v-model="textarea" :rows="4"></el-input>
@@ -131,7 +107,6 @@ import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { getPostDetail, addPostHit, addPostComment, addPostPraise, getPostPraise, getCommentList } from "../../api";
 
-const DialogVisible = ref(false);
 const toReplyName = ref("");
 const disabled = ref(true);
 const textarea = ref("");
@@ -383,6 +358,11 @@ onMounted(() => {
   }
 }
 .post_comment {
+  width: 1200px;
+  margin: 20px auto;
+  position: relative;
+  padding: 0 24px 16px;
+  background: #fff;
   .commment_content {
     margin-bottom: 8px;
     border-radius: 2px;
