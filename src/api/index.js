@@ -58,6 +58,9 @@ export const updateEmailSetting = (params) => request.put("/Email/UpdateEmailSet
 
 export const addSection = (params) => request.post("/LawSection/AddSection", params);
 
+export const getSectionsPage = (params) => request.post("/LawSection/GetSectionsPage", params);
+export const getsubSectionsPage = (params) => request.post("/LawSection/GetsubSectionsPage", params);
+
 export const getSectionById = (params) => request.get("/LawSection/GetSection?id=" + params);
 export const getSections = () => request.get("/LawSection/GetSections");
 

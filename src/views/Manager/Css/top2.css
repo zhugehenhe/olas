@@ -1,0 +1,60 @@
+.tabletop{
+ margin-bottom:0px; 
+ margin:1% 2%;
+ display: flex;
+}
+/*
+#region 给表使用
+*/
+
+/*
+#endregion
+*/
+.el-select{
+    width:110px;
+    height:40px;
+    margin:0 1px;
+    background:rgba(255,255,255,0.2)
+}
+
+.tabletop  .el-select .el-input__inner{
+    color: black;
+}
+.el-input el-input--suffix{
+    color: black;
+    background:rgba(255,255,255,0.2);
+}
+.tabletop button{
+    padding: 5px;
+    background:rgba(255,255,255,0.3);
+    backdrop-filter: blur(15px);
+    color:black;
+    font-weight:bold;
+    border-radius:5px;
+}
+.tabletop button:hover{
+    color: #ffffff;
+}
+.tabletop .input-group
+{
+   background-color:#fff6; 
+   width:17%;
+   padding:5px 0px;
+   border-radius:10px;
+   display: flex;
+   justify-content: center;
+   align-content: center;
+   position:absolute;
+   left:80%;
+}
+.input-group input{
+    display: flex;
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+.input-group i{
+    position:absolute;
+    left:88%;
+}

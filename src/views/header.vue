@@ -25,6 +25,7 @@ const handleSelect = (key, keyPath) => {};
       <template #title>个人中心</template>
       <el-menu-item index="5-1" route="/OLAS/UserInfo"> 我的信息 </el-menu-item>
       <el-menu-item index="5-2" route="/OLAS/Consultation" v-if="user.userInfo.role === 1"> 咨询记录 </el-menu-item>
+      <el-menu-item index="5-3" route="/Manager" v-if="user.userInfo.role === 2"> 系统管理 </el-menu-item>
       <el-menu-item index="5-5"> 退出登录 </el-menu-item>
     </el-sub-menu>
   </el-menu>

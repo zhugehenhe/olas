@@ -1,0 +1,10 @@
+.Sub-head{
+    margin-top:1%;
+    padding:5px 15px;
+    font-size:17px;
+    color:#ffffff;
+    border-bottom:1px solid #eee;
+    font-weight:bold;
+    backdrop-filter: blur(50px);
+    box-shadow: 5px 5px 20px rgba(0,0,0,0.4);
+}

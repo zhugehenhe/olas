@@ -1,0 +1,38 @@
+/* //翻页 */
+.pagebox {
+    width:40%;
+    margin:0 auto;
+    position: absolute;
+    bottom:3%;
+    left:40%;
+    display: flex;
+  }
+.pagebox .box1{
+    max-width:270px;
+    min-width:10px;
+}
+.pagebox .box1 a{
+  margin:0px 3px;
+  font-size:12px;
+  padding:3px 8px;
+  background:rgba(255,255,255,0.2);
+  backdrop-filter: blur(10px);
+  color:black;
+  border:1px solid rgba(255, 255, 255, 0.7);
+  }
+  .pagebox .box1 a:hover{
+    color:#ffffff;
+  }
+  .pagebox button{
+    color:black;
+    background:rgba(255,255,255,0.2);
+    padding:5px;
+    backdrop-filter: blur(10px);
+    outline: none;
+    border: none;
+    margin:0 6px; 
+}
+.pagebox button:hover{
+    color:#ffffff;
+    background:rgba(255,255,255,0.2);
+}

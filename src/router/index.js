@@ -83,6 +83,19 @@ const routes = [
 			},
 		],
 	},
+	{
+		path: "/Manager",
+		name: "Manager",
+		component: () => import("@/views/Manager/index.vue"),
+		meta: { title: "系统管理" },
+		children: [
+			{
+				path: "/Manager/Section",
+				name: "SectionManage",
+				component: () => import("@/views/Manager/Section.vue"),
+			},
+		],
+	},
 ];
 
 const router = createRouter({
