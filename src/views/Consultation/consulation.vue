@@ -1,7 +1,15 @@
 <template>
   <div>
     <div class="DetailNewsbox">
-      <div class="DetailNews" v-for="d in data.listData" :key="d.id">
+      <div
+        v-infinite-scroll="loadData"
+        :infinite-scroll-distance="10"
+        :infinite-scroll-delay="1000"
+        :infinite-scroll-disabled="disabled"
+        class="DetailNews"
+        v-for="d in data"
+        :key="d.id"
+      >
         <template v-if="d.sysUser.id !== uid">
           <div class="leftbox">
             <img :src="d.sysUser.avatar" />
@@ -28,15 +36,30 @@
       </div>
     </div>
     <div class="Divisionline"></div>
-    <el-form :model="sendMsg" :rules="rules" label-width="10px" ref="ruleForm" class="demo-dynamic">
+    <el-form
+      :model="sendMsg"
+      :rules="rules"
+      label-width="10px"
+      ref="ruleForm"
+      class="demo-dynamic"
+      v-if="info.replyStatus === undefined || info.replyStatus === 1"
+    >
       <el-form-item prop="Content">
         <div style="display: block; width: 800px; height: 100%; margin: 0 auto 30px">
-          <QuillEditor class="demo-dynamic" ref="myQuillEditor" :options="editorOption" v-model="sendMsg.Content"> </QuillEditor>
+          <QuillEditor class="demo-dynamic" ref="myQuillEditor" :options="editorOption" v-model="sendMsg.Content">
+          </QuillEditor>
         </div>
-        <el-upload class="avatar-uploader-img" :show-file-list="false" action="" :http-request="upload" :before-upload="beforeUploadImg" />
+        <el-upload
+          class="avatar-uploader-img"
+          :show-file-list="false"
+          action=""
+          :http-request="upload"
+          :before-upload="beforeUploadImg"
+        />
       </el-form-item>
-      <el-form-item style="width: 500px; margin: 50px auto 30px">
-        <el-button type="primary" @click="submitForm()">发送</el-button>
+      <el-form-item style="width: 600px; margin: 50px auto 30px">
+        <el-button type="success" @click="endConsultation">结束咨询</el-button>
+        <el-button type="primary" style="margin-left: 350px" @click="submitForm()">发送</el-button>
         <el-button @click="resetForm">重置</el-button>
       </el-form-item>
     </el-form>
@@ -61,7 +84,13 @@
 <script setup>
 import axios from "axios";
 import { ref, reactive, onMounted } from "vue";
-import { getConsulationInfoList, sendConsultation } from "../../api";
+import {
+  getConsultationInfoList,
+  sendConsultation,
+  readConsultation,
+  finishConsultation,
+  getConsultationById,
+} from "../../api";
 import router from "../../router/index";
 import { useRoute } from "vue-router";
 import { userStore } from "../../store";
@@ -77,6 +106,7 @@ const page = reactive({
 page.id = route.params.id;
 
 const data = ref([]);
+const info = ref([]);
 const sendMsg = reactive({
   cid: "",
   Content: "",
@@ -113,10 +143,56 @@ const editorOption = reactive({
 });
 
 const GetAll = () => {
-  getConsulationInfoList(page).then((res) => {
-    data.value = res.data;
-    console.log(res.data);
+  getConsultationInfoList(page).then((res) => {
+    if (res.data.listData.length == 0) {
+      noMore.value = true;
+    }
+    if (page.pageIndex == 1) {
+      data.value = res.data.listData;
+    } else {
+      data.value = data.value.concat(res.data.listData);
+    }
   });
+};
+
+const GetConBuyId = () => {
+  getConsultationById(page.id).then((res) => {
+    info.value = res.data;
+    if (res.data.userId != uid) {
+      readConsultation(page.id);
+    }
+  });
+};
+const noMore = ref(false);
+const disabled = computed(() => noMore.value);
+const loadData = () => {
+  page.pageIndex += 1;
+  GetAll();
+};
+const endConsultation = () => {
+  ElMessageBox.confirm("确定要结束咨询吗?", "提示", {
+    confirmButtonText: "确定",
+    cancelButtonText: "取消",
+    type: "warning",
+  })
+    .then(() => {
+      finishConsultation(page.id).then((res) => {
+        if (res.status == 200) {
+          ElMessage({
+            message: "结束咨询成功",
+            type: "success",
+          });
+        } else {
+          ElMessage.error("结束咨询失败");
+        }
+      });
+    })
+    .catch(() => {
+      ElMessage({
+        type: "info",
+        message: "已取消结束咨询",
+      });
+    });
 };
 const submitForm = async (formName) => {
   sendMsg.cid = page.id;
@@ -236,6 +312,7 @@ const resetForm = () => {
 onMounted(() => {
   uid = JSON.parse(localStorage.getItem("userInfo")).id;
   GetAll();
+  GetConBuyId();
 });
 </script>
 

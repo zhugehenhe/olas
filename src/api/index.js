@@ -36,14 +36,17 @@ export const createConsulation = (params) => request.post("/Consultation/CreateC
 
 export const newGuid = () => request.get("/Consultation/NewGuid");
 
-export const getConsulationInfoList = (params) => request.post("/Consultation/GetConsultationInfoList", params);
+export const getConsultationInfoList = (params) => request.post("/Consultation/GetConsultationInfoList", params);
+export const getConsultationById = (params) => request.post("/Consultation/GetConsultationById", params);
 
 export const finishConsultation = (params) => request.put("/Consultation/FinishConsultation", params);
 export const reviews = (params) => request.post("/Consultation/Reviews", params);
 
 export const getConsultationByUser = (params) => request.post("/Consultation/GetConsultationByUser", params);
 
-export const readConsulation = (params) => request.put("/Consultation/ReadConsultation", params);
+export const getConsultationByLawyer = (params) => request.post("/Consultation/GetConsultationByLawyer", params);
+
+export const readConsultation = (params) => request.put("/Consultation/ReadConsultation", params);
 
 export const sendConsultation = (params) => request.post("/Consultation/SendConsultation", params);
 
@@ -73,6 +76,8 @@ export const getHotLawyerBySection = (params) => request.get("/Lawyer/GetHotLawy
 export const getLawyerInfoBySection = (params) => request.post("/Lawyer/GetLawyerInfoBySection", params);
 
 export const getHotLawyer = () => request.get("/Lawyer/GetHotLawyer");
+
+export const getLawyerInfoByUser = () => request.get("/Lawyer/GetLawyerInfoByUser");
 
 export const getCount = (params) => request.post("/Lawyer/GetCount", params);
 
