@@ -33,13 +33,13 @@
               </el-sub-menu>
               <el-sub-menu index="3">
                 <template #title>
-                  <i class="iconfont icon-details"></i>
-                  <span>评论</span>
+                  <el-icon><Document /></el-icon>
+                  <span>文章</span>
                 </template>
                 <el-menu-item-group>
-                  <el-menu-item index="3-1" @click="navigateTo('PostManager')">帖子</el-menu-item>
+                  <el-menu-item index="3-1" @click="navigateTo('/Manager/Post')">帖子</el-menu-item>
                   <el-menu-item index="3-2" @click="navigateTo('CommentManager')">评论</el-menu-item>
-                  <el-menu-item index="3-3" @click="navigateTo('PostNotify')">公告</el-menu-item>
+                  <el-menu-item index="3-3" @click="navigateTo('/Manager/Article')">法律资讯</el-menu-item>
                 </el-menu-item-group>
               </el-sub-menu>
               <el-sub-menu index="4">

@@ -99,6 +99,20 @@ const routes = [
 				name: "SubSectionManage",
 				component: () => import("@/views/Manager/SubSection.vue"),
 			},
+			{
+				path: "/Manager/Post",
+				name: "PostManage",
+				component: () => import("@/views/Manager/Post.vue"),
+			},
+			{
+				path: "/Manager/Article",
+				name: "ArticleManage",
+				component: () => import("@/views/Manager/Article.vue"),
+			},
+			{
+				path: "/Manager/Lawyer",
+				name: "LawyerManage",
+			},
 		],
 	},
 ];

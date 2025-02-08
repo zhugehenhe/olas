@@ -8,6 +8,15 @@
         <el-button type="info" @click="AddShow"
           ><el-icon><Plus /></el-icon>新增板块</el-button
         >
+        <el-select
+          v-model="page.id"
+          placeholder="主板块"
+          clearable
+          style="width: 300px; margin-left: 30px"
+          @change="SearchSection"
+        >
+          <el-option v-for="item in Sections" :key="item.id" :label="item.sectionName" :value="item.id"></el-option>
+        </el-select>
         <div class="input-group">
           <input type="text" placeholder="搜索" v-model="page.search" />
           <el-icon @click="SearchSection"><Search /></el-icon>
@@ -32,8 +41,15 @@
         <el-table-column prop="squence" label="排序" />
         <el-table-column label="查看帖子">
           <template #default="scope">
-            <router-link :to="{ path: '/SubBoardManager', query: { id: scope.row.id } }">
-              <el-icon><Tickets /></el-icon>详情
+            <router-link :to="{ path: '/Manager/Post', query: { id: scope.row.id } }">
+              <el-icon><Tickets /></el-icon>查看
+            </router-link>
+          </template>
+        </el-table-column>
+        <el-table-column label="查看资讯">
+          <template #default="scope">
+            <router-link :to="{ path: '/Manager/Article', query: { id: scope.row.id } }">
+              <el-icon><Tickets /></el-icon>查看
             </router-link>
           </template>
         </el-table-column>
@@ -183,7 +199,7 @@ const SearchSection = () => {
 };
 
 const DeleteShow = (id) => {
-  ElMessageBox.confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+  ElMessageBox.confirm("此操作将删除该板块, 是否继续?", "提示", {
     confirmButtonText: "确定",
     cancelButtonText: "取消",
     type: "warning",
@@ -254,7 +270,6 @@ const AddShow = () => {
 const GetSection = () => {
   getSections().then((res) => {
     Sections.value = res.data;
-    console.log(Sections.value);
   });
 };
 const resetForm = () => {
@@ -282,5 +297,8 @@ onMounted(() => {
   margin-top: 20px;
   display: flex;
   justify-content: center;
+}
+.el-select {
+  height: 30px;
 }
 </style>

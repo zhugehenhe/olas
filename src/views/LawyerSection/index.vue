@@ -94,7 +94,9 @@ onMounted(() => {
             </div>
           </template>
           <div class="consult_list" v-for="item in postList.listData" :key="item.id">
-            <router-link class="link nowrap" :to="{ path: '/OLAS/Post', query: { id: item.id } }">{{ item.title }}</router-link>
+            <router-link class="link nowrap" :to="{ path: '/OLAS/Post', query: { id: item.id } }">{{
+              item.title
+            }}</router-link>
           </div>
         </el-card>
       </div>
@@ -118,15 +120,27 @@ onMounted(() => {
             >专业精选律师
           </p>
           <template v-if="lawyerList.length > 0">
-            <router-link :to="{ path: '/OLAS/Ask', query: { id: lawyerList[0].id } }" target="_blank" class="laywer_img">
+            <router-link
+              :to="{ path: '/OLAS/Ask', query: { id: lawyerList[0].id } }"
+              target="_blank"
+              class="laywer_img"
+            >
               <img :src="lawyerList[0].coverPhoto" :alt="lawyerList[0].lawyerName + '律师'" />
             </router-link>
-            <router-link :to="{ path: '/OLAS/Ask', query: { id: lawyerList[0].id } }" target="_blank" class="lawyer_name"
+            <router-link
+              :to="{ path: '/OLAS/Ask', query: { id: lawyerList[0].id } }"
+              target="_blank"
+              class="lawyer_name"
               >{{ lawyerList[0].lawyerName }}律师</router-link
             >
             <p class="lawyer_hobies">擅长<span class="lawyer_hobies_span">:</span>{{ lawyerList[0].specialization }}</p>
             <div class="lawyer_tel"><span class="tel_icon"></span>{{ lawyerList[0].phone }}</div>
-            <router-link :to="{ path: '/OLAS/Ask', query: { id: lawyerList[0].id } }" target="_blank" class="cb_askmy_btn">立即咨询</router-link>
+            <router-link
+              :to="{ path: '/OLAS/Ask', query: { id: lawyerList[0].id } }"
+              target="_blank"
+              class="cb_askmy_btn"
+              >立即咨询</router-link
+            >
           </template>
         </div>
       </div>
@@ -297,6 +311,9 @@ onMounted(() => {
         .laywer_img {
           position: relative;
           margin-bottom: 30px;
+          img {
+            width: 250px;
+          }
         }
         .lawyer_name {
           font-size: 28px;
@@ -342,7 +359,8 @@ onMounted(() => {
             transform: translate(-50%, -50%);
             width: 18px;
             height: 20px;
-            background: url(https://pic2.lawtimeimg.com/images/v2/pc/zhishi/info/law_detail-sprite.png) -148px -65px / 237px no-repeat;
+            background: url(https://pic2.lawtimeimg.com/images/v2/pc/zhishi/info/law_detail-sprite.png) -148px -65px /
+              237px no-repeat;
           }
         }
         .cb_askmy_btn {
