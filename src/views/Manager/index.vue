@@ -28,7 +28,7 @@
                 </template>
                 <el-menu-item-group>
                   <el-menu-item index="2-1" @click="navigateTo('/Manager/Section')">主板块</el-menu-item>
-                  <el-menu-item index="2-2" @click="navigateTo('SubBoardManager')">子板块</el-menu-item>
+                  <el-menu-item index="2-2" @click="navigateTo('/Manager/SubSection')">子板块</el-menu-item>
                 </el-menu-item-group>
               </el-sub-menu>
               <el-sub-menu index="3">
@@ -115,7 +115,7 @@ const backUserLogin = () => {
 .Homeindex .box1 {
   width: 1300px;
   height: 780px;
-  margin: 0 auto;
+  margin: 50px auto;
   padding: 41px;
   display: flex;
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
@@ -159,7 +159,7 @@ const backUserLogin = () => {
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
   flex-direction: column;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(54, 54, 54, 0.3);
   backdrop-filter: blur(3px);
 }
 .homeright .head {

@@ -94,6 +94,11 @@ const routes = [
 				name: "SectionManage",
 				component: () => import("@/views/Manager/Section.vue"),
 			},
+			{
+				path: "/Manager/SubSection",
+				name: "SubSectionManage",
+				component: () => import("@/views/Manager/SubSection.vue"),
+			},
 		],
 	},
 ];

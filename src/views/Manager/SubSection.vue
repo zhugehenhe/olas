@@ -27,11 +27,12 @@
             {{ scope.$index + 1 + (page.pageIndex - 1) * page.pageSize }}
           </template>
         </el-table-column>
+        <el-table-column prop="parentSection.sectionName" label="主版块名称" />
         <el-table-column prop="sectionName" label="版块名称" />
         <el-table-column prop="squence" label="排序" />
-        <el-table-column label="查看子版块">
+        <el-table-column label="查看帖子">
           <template #default="scope">
-            <router-link :to="{ path: '/Manager/SubSection', query: { id: scope.row.id } }">
+            <router-link :to="{ path: '/SubBoardManager', query: { id: scope.row.id } }">
               <el-icon><Tickets /></el-icon>详情
             </router-link>
           </template>
@@ -61,7 +62,17 @@
         <div class="Show" style="top: 10%; left: 6%; width: 1020px">
           <el-form :model="section" :rules="rules" ref="ruleForm" label-width="100px" class="demo-dynamic">
             <div style="margin: 20px">
-              <el-form-item label="新增子板块"> </el-form-item>
+              <el-form-item label="新增主板块"> </el-form-item>
+              <el-form-item label="主板块">
+                <el-select v-model="section.parentSectionID" placeholder="请选择" style="width: 400px">
+                  <el-option
+                    v-for="item in Sections"
+                    :key="item.id"
+                    :label="item.sectionName"
+                    :value="item.id"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
               <el-form-item label="板块名" prop="sectionName">
                 <el-input v-model="section.sectionName" style="width: 400px"></el-input>
               </el-form-item>
@@ -82,7 +93,7 @@
         <div class="Show" style="top: 10%; left: 6%; width: 1020px">
           <el-form :model="section" :rules="rules" ref="ruleForm" label-width="100px" class="demo-dynamic">
             <div style="margin: 20px">
-              <el-form-item label="修改子板块"> </el-form-item>
+              <el-form-item label="修改主板块"> </el-form-item>
               <el-form-item label="主板块名称" prop="section">
                 <el-input v-model="section.sectionName" style="width: 400px"></el-input>
               </el-form-item>
@@ -104,23 +115,27 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { getSectionsPage, addSection, deleteSection, updateSection } from "../../api";
-const router = useRouter();
+import { getsubSectionsPage, addSection, deleteSection, updateSection, getSections } from "../../api";
+import { useRoute } from "vue-router";
+const route = useRoute();
 const ruleForm = ref(null);
 const data = ref([]);
 const editShow = ref(false);
 const addShow = ref(false);
+const Sections = ref([]);
 const page = reactive({
   pageIndex: 1,
   pageSize: 10,
-  search: "",
+  search: null,
+  id: "",
   total: 0,
 });
-
+page.id = route.query.id;
 const section = ref({
+  parentSectionID: "",
   sectionName: "",
   squence: 0,
-  level: 0,
+  level: 1,
 });
 const Keylocking = ref(true);
 const validateSquence = (rule, value, callback) => {
@@ -140,15 +155,7 @@ const rules = ref({
     { validator: validateSquence, trigger: "blur" },
   ],
 });
-const handleSizeChange = (newSize) => {
-  page.pageSize = newSize;
-  GetAll();
-};
 
-const handleCurrentChange = (newPage) => {
-  page.pageIndex = newPage;
-  GetAll();
-};
 const Add = async () => {
   await ruleForm.value.validate((valid) => {
     if (valid) {
@@ -220,12 +227,20 @@ const editName = async () => {
 };
 
 const GetAll = async () => {
-  getSectionsPage(page).then((res) => {
+  getsubSectionsPage(page).then((res) => {
     data.value = res.data;
     page.total = res.data.count;
   });
 };
+const handleSizeChange = (newSize) => {
+  page.pageSize = newSize;
+  GetAll();
+};
 
+const handleCurrentChange = (newPage) => {
+  page.pageIndex = newPage;
+  GetAll();
+};
 const EditNameShow = (b) => {
   editShow.value = true;
   section.value = JSON.parse(JSON.stringify(b)); // 取消数据绑定
@@ -236,7 +251,12 @@ const AddShow = () => {
   addShow.value = !addShow.value;
   Keylocking.value = false;
 };
-
+const GetSection = () => {
+  getSections().then((res) => {
+    Sections.value = res.data;
+    console.log(Sections.value);
+  });
+};
 const resetForm = () => {
   addShow.value = false;
   editShow.value = false;
@@ -250,6 +270,7 @@ const resetForm = () => {
 
 onMounted(() => {
   GetAll();
+  GetSection();
 });
 </script>
 
@@ -257,8 +278,6 @@ onMounted(() => {
 @import "./Css/Subhead.css";
 @import "./Css/tanchuang.css";
 @import "./Css/top2.css";
-</style>
-<style>
 .pagination-center {
   margin-top: 20px;
   display: flex;
