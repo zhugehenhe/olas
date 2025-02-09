@@ -8,13 +8,7 @@
         <el-button type="info" @click="AddShow"
           ><el-icon><Plus /></el-icon>新增板块</el-button
         >
-        <el-select
-          v-model="page.id"
-          placeholder="主板块"
-          clearable
-          style="width: 300px; margin-left: 30px"
-          @change="SearchSection"
-        >
+        <el-select v-model="page.id" placeholder="主板块" clearable style="width: 300px; margin-left: 30px" @change="SearchSection">
           <el-option v-for="item in Sections" :key="item.id" :label="item.sectionName" :value="item.id"></el-option>
         </el-select>
         <div class="input-group">
@@ -55,10 +49,10 @@
         </el-table-column>
         <el-table-column label="操作">
           <template #default="scope">
-            <span @click="EditNameShow(scope.row)">
+            <el-button link type="primary" @click="EditNameShow(scope.row)">
               <el-icon><Edit /></el-icon>编辑
-            </span>
-            <el-button link @click="DeleteShow(scope.row.id)">
+            </el-button>
+            <el-button type="danger" link @click="DeleteShow(scope.row.id)">
               <el-icon><Delete /></el-icon>删除
             </el-button>
           </template>
@@ -81,12 +75,7 @@
               <el-form-item label="新增主板块"> </el-form-item>
               <el-form-item label="主板块">
                 <el-select v-model="section.parentSectionID" placeholder="请选择" style="width: 400px">
-                  <el-option
-                    v-for="item in Sections"
-                    :key="item.id"
-                    :label="item.sectionName"
-                    :value="item.id"
-                  ></el-option>
+                  <el-option v-for="item in Sections" :key="item.id" :label="item.sectionName" :value="item.id"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="板块名" prop="sectionName">
@@ -290,9 +279,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-@import "./Css/Subhead.css";
-@import "./Css/tanchuang.css";
-@import "./Css/top2.css";
 .pagination-center {
   margin-top: 20px;
   display: flex;

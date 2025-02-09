@@ -1,11 +1,18 @@
 <template>
-  <div>
+  <div id="wrapper">
+    <div class="tabletop">
+      <div class="input-group">
+        <el-button type="success" size="small" @click="handleCreatePost">发布帖子</el-button>
+        <input type="text" placeholder="搜索" v-model="page.search" />
+        <el-icon @click="SearchSection"><Search /></el-icon>
+      </div>
+    </div>
     <!-- 添加发布帖子按钮 -->
-    <el-button type="success" size="small" @click="handleCreatePost">发布帖子</el-button>
+
     <el-table :data="data.listData" style="width: 100%" @row-click="handleRowClick">
       <el-table-column prop="title" label="标题" width="180"></el-table-column>
       <el-table-column prop="content" label="内容"></el-table-column>
-      <el-table-column prop="user.userName" label="发布人"></el-table-column>
+      <el-table-column prop="user.nickName" label="发布人"></el-table-column>
       <el-table-column prop="createTime" label="发布时间" width="180"></el-table-column>
       <el-table-column label="评论/点赞/点击" width="200">
         <template #default="scope">
@@ -60,6 +67,7 @@ const page = reactive({
   pageIndex: 1,
   pageSize: 10,
   total: 0,
+  search: null,
 });
 
 const dialogVisible = ref(false); // 弹窗可见性
@@ -68,6 +76,11 @@ const postForm = reactive({
   content: "",
   sid: sectionId,
 });
+
+const SearchSection = () => {
+  page.pageIndex = 1;
+  GetALL();
+};
 
 const GetALL = async () => {
   page.id = sectionId;
@@ -91,9 +104,11 @@ const handleCurrentChange = (newPage) => {
 const handleView = (id) => {
   router.push({ path: "/OLAS/Post", query: { id: id } });
 };
+
 const handleRowClick = (row) => {
   handleView(row.id);
 };
+
 // 添加 handleCreatePost 方法
 const handleCreatePost = () => {
   dialogVisible.value = true;
@@ -125,10 +140,80 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+#wrapper {
+  padding: 20px;
+}
+
+.tabletop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+
+  .input-group {
+    display: flex;
+    align-items: center;
+
+    input {
+      margin-left: 10px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      width: 200px;
+    }
+
+    .el-icon {
+      margin-left: 10px;
+      cursor: pointer;
+      font-size: 18px;
+      color: #666;
+    }
+  }
+}
+
+.el-button {
+  margin-right: 10px;
+}
+
+input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 200px;
+}
+
+.el-table {
+  margin-top: 20px;
+  font-size: 14px;
+
+  th {
+    background-color: #f5f7fa;
+    color: #909399;
+  }
+
+  tr:nth-child(even) {
+    background-color: #fafafa;
+  }
+
+  td {
+    padding: 12px;
+  }
+}
+
 .pagination-center {
   margin-top: 20px;
   display: flex;
   justify-content: center;
+}
+
+.el-dialog {
+  .el-form-item {
+    margin-bottom: 15px;
+  }
+
+  .dialog-footer {
+    text-align: right;
+  }
 }
 </style>

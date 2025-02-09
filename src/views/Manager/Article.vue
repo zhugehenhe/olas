@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="Sub-head">
-      <a>帖子管理</a>
+      <a>法律资讯管理</a>
     </div>
     <div id="wrapper">
       <div class="tabletop">
@@ -37,10 +37,10 @@
         <el-table-column prop="praiseLen" label="点赞数"></el-table-column>
         <el-table-column label="操作" width="150">
           <template #default="scope">
-            <span @click="DetailShow(scope.row)">
-              <el-icon><Reading /></el-icon>查看详情
-            </span>
-            <el-button link @click="DeleteShow(scope.row.id)">
+            <el-button link type="primary" @click="DetailShow(scope.row)">
+              <el-icon><Reading /></el-icon>详情
+            </el-button>
+            <el-button link type="danger" @click="DeleteShow(scope.row.id)">
               <el-icon><Delete /></el-icon>删除
             </el-button>
           </template>
@@ -92,7 +92,7 @@
       </div>
     </el-dialog>
     <!-- 添加页 -->
-    <el-dialog v-model="addDialogVisible" title="新增文章" width="60%">
+    <el-dialog v-model="addDialogVisible" title="新增文章" width="80%">
       <el-form :model="newArticle" :rules="rules" ref="articleForm" label-width="100px">
         <el-form-item label="标题" prop="title">
           <el-input v-model="newArticle.title"></el-input>
@@ -111,13 +111,7 @@
           />
         </el-form-item>
         <el-form-item label="封面" prop="img">
-          <el-upload
-            v-loading="loading"
-            :show-file-list="false"
-            action=""
-            :http-request="upload"
-            :before-upload="beforeUploadImg"
-          >
+          <el-upload v-loading="loading" :show-file-list="false" action="" :http-request="upload" :before-upload="beforeUploadImg">
             <el-image style="width: 100px" v-if="newArticle.img" :src="newArticle.img" />
             <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
           </el-upload>
@@ -129,7 +123,10 @@
           <el-input v-model="newArticle.url" :rows="4"></el-input>
         </el-form-item>
         <el-form-item label="内容" prop="content">
-          <el-input type="textarea" v-model="newArticle.content" :rows="4"></el-input>
+          <div style="display: block; width: 800px; height: 200px; margin: 0 auto 10px">
+            <QuillEditor class="demo-dynamic" ref="myQuillEditor" :options="editorOption" v-model="newArticle.content"> </QuillEditor>
+          </div>
+          <el-upload class="avatar-uploader-img" :show-file-list="false" action="" :http-request="uploadimg" :before-upload="beforeUploadImg" />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -139,10 +136,26 @@
         </span>
       </template>
     </el-dialog>
+    <button v-show="false" id="disShow" @click="dialogFormVisibleShow"></button>
+    <div>
+      <el-form v-show="showbox" class="SendEidtbox">
+        <el-form-item label="本地上传" label-width="100px">
+          <el-button @click="uploadimage">上传图片</el-button>
+        </el-form-item>
+        <el-form-item label="图床上传" label-width="100px">
+          <el-input v-model="upurl"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="uploadurl(upurl, indexlength)">确定</el-button>
+          <el-button @click="showbox = false">取消</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
   </div>
 </template>
 
 <script setup>
+import axios from "axios";
 import { ref, onMounted } from "vue";
 import { getArticleList, deleteArticle, getSections, addArticle, uploadFile } from "../../api";
 import { useRoute } from "vue-router";
@@ -150,8 +163,6 @@ const route = useRoute();
 const data = ref([]);
 const loading = ref(false);
 const Sections = ref([]);
-const SeclectId = ref("");
-const subSections = ref({});
 const page = reactive({
   pageIndex: 1,
   pageSize: 10,
@@ -183,12 +194,40 @@ const rules = ref({
   content: [{ required: true, message: "请输入内容", trigger: "blur" }],
 });
 const articleForm = ref(null);
+const myQuillEditor = ref(null);
+const options = [["bold", "italic", "underline", "strike"], [{ color: [] }, { background: [] }], ["image"]];
+
+const upurl = ref("");
+const indexlength = ref("");
+const showbox = ref(false);
+
+const editorOption = reactive({
+  theme: "snow",
+  placeholder: "请输入内容.....",
+  modules: {
+    toolbar: {
+      container: options,
+      handlers: {
+        image: function (value) {
+          if (value) {
+            document.querySelector("#disShow").click();
+          } else {
+            this.quill.format("image", false);
+          }
+        },
+      },
+    },
+  },
+});
 
 const AddShow = () => {
   addDialogVisible.value = true;
 };
 
 const submitForm = () => {
+  const quill = myQuillEditor.value.getQuill();
+  const content = quill.root.innerHTML;
+  newArticle.value.content = content;
   articleForm.value.validate((valid) => {
     if (valid) {
       console.log("提交表单数据:", newArticle.value);
@@ -278,7 +317,79 @@ const DeleteShow = (id) => {
       });
     });
 };
+const dialogFormVisibleShow = () => {
+  const quill = myQuillEditor.value.getQuill();
+  indexlength.value = quill.getSelection().index;
+  upurl.value = "";
+  showbox.value = true;
+};
 
+const uploadimage = () => {
+  document.querySelector(".avatar-uploader-img input").click();
+};
+
+const uploadurl = (url, indexlength) => {
+  const quill = myQuillEditor.value.getQuill();
+  try {
+    quill.insertEmbed(indexlength, "image", url);
+    const images = quill.root.querySelectorAll(".ql-editor img");
+    images.forEach((img) => {
+      img.style.maxWidth = "400px";
+      img.style.height = "auto";
+    });
+    showbox.value = false;
+    quill.setSelection(indexlength + 1);
+  } catch {
+    uploadImgError();
+  }
+};
+
+const uploadImgSuccess = (res, file) => {
+  const quill = myQuillEditor.value.getQuill();
+  if (res.status == "200" && res.data.data.links.url != null) {
+    const length = quill.getSelection().index;
+    quill.insertEmbed(length, "image", res.data.data.links.url);
+    const images = quill.root.querySelectorAll(".ql-editor img");
+    images.forEach((img) => {
+      img.style.maxWidth = "200px";
+      img.style.height = "auto";
+    });
+    quill.setSelection(length + 1);
+  } else {
+    ElMessage.error("图片插入失败");
+  }
+};
+
+const uploadimg = async (file) => {
+  const formData = new FormData();
+  formData.append("file", file.file);
+  console.log(formData);
+  await axios
+    .post(
+      "https://pro.helloimg.com/api/v1/upload",
+      formData,
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "multipart/form-data",
+          Authorization: "Bearer 81|wbu2wloCplxdajMs7oGzlf9I9OE9bRXsIJdVXlk9",
+        },
+      },
+      { timeout: 150000 }
+    )
+    .then((res) => {
+      uploadImgSuccess(res);
+      showbox.value = false;
+    })
+    .catch((error) => {
+      console.log(error);
+      uploadImgError();
+    });
+};
+
+const uploadImgError = () => {
+  ElMessage.error("图片插入失败");
+};
 const GetSection = () => {
   getSections().then((res) => {
     Sections.value = res.data;
@@ -302,9 +413,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-@import "./Css/Subhead.css";
-@import "./Css/tanchuang.css";
-@import "./Css/top2.css";
 .pagination-center {
   margin-top: 20px;
   display: flex;
@@ -372,5 +480,17 @@ onMounted(() => {
   font-size: 16px;
   color: #333;
   line-height: 1.6;
+}
+.SendEidtbox {
+  width: 500px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  z-index: 9999;
 }
 </style>

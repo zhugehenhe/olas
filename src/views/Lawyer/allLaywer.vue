@@ -7,6 +7,7 @@ const sections = ref([]);
 const page = reactive({
   pageIndex: 1,
   pageSize: 15,
+  search: null,
   id: "",
   total: 0,
 });

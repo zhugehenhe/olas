@@ -1,15 +1,14 @@
 <template>
   <div>
-    <div class="DetailNewsbox">
-      <div
-        v-infinite-scroll="loadData"
-        :infinite-scroll-distance="10"
-        :infinite-scroll-delay="1000"
-        :infinite-scroll-disabled="disabled"
-        class="DetailNews"
-        v-for="d in data"
-        :key="d.id"
-      >
+    <div
+      class="DetailNewsbox"
+      v-infinite-scroll="loadData"
+      :infinite-scroll-distance="100"
+      :infinite-scroll-delay="1000"
+      :infinite-scroll-disabled="disabled"
+      style="overflow: auto"
+    >
+      <div class="DetailNews" v-for="d in data" :key="d.id">
         <template v-if="d.sysUser.id !== uid">
           <div class="leftbox">
             <img :src="d.sysUser.avatar" />
@@ -46,16 +45,9 @@
     >
       <el-form-item prop="Content">
         <div style="display: block; width: 800px; height: 100%; margin: 0 auto 30px">
-          <QuillEditor class="demo-dynamic" ref="myQuillEditor" :options="editorOption" v-model="sendMsg.Content">
-          </QuillEditor>
+          <QuillEditor class="demo-dynamic" ref="myQuillEditor" :options="editorOption" v-model="sendMsg.Content"> </QuillEditor>
         </div>
-        <el-upload
-          class="avatar-uploader-img"
-          :show-file-list="false"
-          action=""
-          :http-request="upload"
-          :before-upload="beforeUploadImg"
-        />
+        <el-upload class="avatar-uploader-img" :show-file-list="false" action="" :http-request="upload" :before-upload="beforeUploadImg" />
       </el-form-item>
       <el-form-item style="width: 600px; margin: 50px auto 30px">
         <el-button type="success" @click="endConsultation">结束咨询</el-button>
@@ -84,13 +76,7 @@
 <script setup>
 import axios from "axios";
 import { ref, reactive, onMounted } from "vue";
-import {
-  getConsultationInfoList,
-  sendConsultation,
-  readConsultation,
-  finishConsultation,
-  getConsultationById,
-} from "../../api";
+import { getConsultationInfoList, sendConsultation, readConsultation, finishConsultation, getConsultationById } from "../../api";
 import router from "../../router/index";
 import { useRoute } from "vue-router";
 import { userStore } from "../../store";
@@ -142,10 +128,13 @@ const editorOption = reactive({
   },
 });
 
-const GetAll = () => {
+const GetAll = async () => {
   getConsultationInfoList(page).then((res) => {
     if (res.data.listData.length == 0) {
       noMore.value = true;
+    }
+    if (res.data.listData.length == 15) {
+      noMore.value = false;
     }
     if (page.pageIndex == 1) {
       data.value = res.data.listData;
@@ -163,11 +152,13 @@ const GetConBuyId = () => {
     }
   });
 };
-const noMore = ref(false);
+const noMore = ref(true);
 const disabled = computed(() => noMore.value);
-const loadData = () => {
-  page.pageIndex += 1;
-  GetAll();
+const loadData = async () => {
+  if (data.value.length % 15 == 0) {
+    page.pageIndex += 1;
+    await GetAll();
+  }
 };
 const endConsultation = () => {
   ElMessageBox.confirm("确定要结束咨询吗?", "提示", {
@@ -308,11 +299,15 @@ const resetForm = () => {
   sendMsg.Content = "";
   quill.root.innerHTML = "";
 };
-
+let intervalId = null;
 onMounted(() => {
   uid = JSON.parse(localStorage.getItem("userInfo")).id;
   GetAll();
   GetConBuyId();
+  intervalId = setInterval(GetAll, 5000); // 每5秒调用一次 GetAll
+});
+onUnmounted(() => {
+  clearInterval(intervalId); // 清除定时器
 });
 </script>
 
@@ -325,92 +320,51 @@ onMounted(() => {
   margin: 1% auto;
   background: #f8f8f8;
   border: 2px solid rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
 .DetailNews {
   width: 100%;
-  margin: 5px;
+  margin: 10px 0;
   display: flex;
+  align-items: flex-start;
 }
+
 /* 非登录账号的排版 */
 .DetailNews .leftbox {
   flex: 5%;
+  margin-right: 10px;
 }
+
 .DetailNews .leftbox img {
   width: 50px;
   height: 50px;
   padding: 4px;
   margin: 5px;
   border: 3px solid rgb(255, 255, 255);
-  border-radius: 3px;
+  border-radius: 50%;
   background: #d0d0d0c4;
 }
+
 .DetailNews .rightbox {
   flex: 90%;
-  white-space: normal; /* 或者 pre-wrap，根据你的需求来设置 */
-  overflow-wrap: break-word; /* 允许在单词内换行 */
-  word-break: break-all; /* 在任何字符间换行，如果需要的话 */
-  box-sizing: border-box; /* 包含 padding 和 border 在 flex 的 85% 内 */
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-all;
+  box-sizing: border-box;
   width: 100%;
   display: flex;
   flex-direction: column;
 }
+
 .DetailNews .rightbox .upbox {
   height: 20px;
-  font-size: 10px;
+  font-size: 12px;
   padding: 3px;
-}
-.DetailNews .rightbox1 {
-  flex: 5%;
-}
-.DetailNews .rightbox p {
-  font-size: 10px;
-  padding: 3px;
+  color: #555;
 }
 
-/* 自己账号的排版 */
-.DetailNews .leftboxone {
-  flex: 10%;
-}
-.DetailNews .leftboxone img {
-  width: 50px;
-  height: 50px;
-  padding: 4px;
-  margin: 5px;
-  border: 3px solid rgb(255, 255, 255);
-  border-radius: 3px;
-  background: #d0d0d0c4;
-}
-.DetailNews .rightboxone {
-  flex: 85%;
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-}
-.DetailNews .rightboxone .upbox {
-  height: 20px;
-  font-size: 10px;
-  padding: 3px;
-  text-align: right;
-}
-.DetailNews .rightboxone .downbox {
-  max-width: 600px;
-  position: relative;
-  display: inline-block;
-  padding: 10px 13px;
-  min-height: 22px;
-  background: #fff;
-  border-radius: 8px;
-  line-height: 25px;
-  font-size: 14px;
-  color: #111;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  text-align: right;
-  margin-left: 200px;
-}
 .DetailNews .rightbox .downbox {
   max-width: 600px;
   position: relative;
@@ -422,31 +376,92 @@ onMounted(() => {
   line-height: 25px;
   font-size: 14px;
   color: #111;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  text-align: left;
+  margin-top: 5px;
+}
+
+/* 自己账号的排版 */
+.DetailNews .leftboxone {
+  flex: 10%;
+  margin-left: 10px;
+}
+
+.DetailNews .leftboxone img {
+  width: 50px;
+  height: 50px;
+  padding: 4px;
+  margin: 5px;
+  border: 3px solid rgb(255, 255, 255);
+  border-radius: 50%;
+  background: #d0d0d0c4;
+}
+
+.DetailNews .rightboxone {
+  flex: 85%;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  align-items: flex-end;
+}
+
+.DetailNews .rightboxone .upbox {
+  height: 20px;
+  font-size: 12px;
+  padding: 3px;
+  text-align: right;
+  color: #555;
+}
+
+.DetailNews .rightboxone .downbox {
+  max-width: 600px;
+  position: relative;
+  display: inline-block;
+  padding: 10px 13px;
+  min-height: 22px;
+  background: #e0f7fa;
+  border-radius: 8px;
+  line-height: 25px;
+  font-size: 14px;
+  color: #111;
   box-sizing: border-box;
   text-align: right;
-}
-.DetailNews .rightboxone1 {
-  flex: 5%;
+  margin-top: 5px;
 }
 
 .DetailNews:hover {
   background: #cccccc65;
 }
+
 .Divisionline {
   border-top: 1px dashed #7e7f7f;
-  padding: 3px 12px;
+  padding: 10px 0;
+  margin: 20px 0;
 }
+
 .SendEidtbox {
   width: 500px;
   height: 400px;
   position: fixed;
-  top: 40%;
-  left: 40%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background: white;
-  padding: 3px 12px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.el-form-item {
+  margin-bottom: 20px;
+}
+
+.el-button {
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.el-button:hover {
+  background-color: #409eff;
+  color: white;
 }
 </style>

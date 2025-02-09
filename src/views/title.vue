@@ -6,6 +6,9 @@ const user = userStore();
 const toLogin = () => {
   router.push("/login");
 };
+const toRegister = () => {
+  router.push("/register");
+};
 const logout = () => {
   localStorage.clear();
   window.location.reload();
@@ -27,7 +30,7 @@ onMounted(() => {
       <router-link to="/OLAS/AllLawyer">找律师</router-link>
     </div>
     <div class="right_title">
-      <span v-if="!user.loginStatus">免费注册</span>
+      <span @click="toRegister" v-if="!user.loginStatus">免费注册</span>
       <span v-if="!user.loginStatus" @click="toLogin">登录</span>
       <span v-if="user.loginStatus">{{ user.userInfo.nickName }}</span>
       <span v-if="user.loginStatus" @click="logout">退出登录</span>

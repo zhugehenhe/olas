@@ -9,7 +9,9 @@ let loginUser = reactive({
   userName: "",
   password: "",
 });
-
+const toRegister = () => {
+  router.push("/register");
+};
 const Login = () => {
   login(loginUser).then((res) => {
     if (res.status === 200) {
@@ -34,32 +36,59 @@ const Login = () => {
 };
 </script>
 <template>
-  <el-image style="float: left; width: 35%; margin-right: 10px" :src="loginbg">
-  </el-image>
-  <el-form v-model="loginUser">
-    <el-form-item label="账号" prop="phone">
-      <el-input
-        v-model="loginUser.userName"
-        placeholder="请输入手机号/邮箱/用户名"
-      />
-    </el-form-item>
-    <el-form-item label="密码">
-      <el-input
-        v-model="loginUser.password"
-        type="password"
-        placeholder="请输入密码"
-      />
-    </el-form-item>
-    <el-form-item>
-      <el-button
-        type="primary"
-        style="margin: auto; width: 100px"
-        @click="Login(loginUser)"
-      >
-        登录
-      </el-button>
-    </el-form-item>
-  </el-form>
+  <div class="login-form-container">
+    <el-image class="login-bg" :src="loginbg"></el-image>
+    <el-form class="login-form" :model="loginUser">
+      <h2>密码登录</h2>
+      <el-form-item label="账号" prop="phone">
+        <el-input v-model="loginUser.userName" placeholder="请输入手机号/邮箱/用户名" />
+      </el-form-item>
+      <el-form-item label="密码">
+        <el-input v-model="loginUser.password" type="password" placeholder="请输入密码" />
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" style="width: 100%" @click="Login"> 登录 </el-button>
+        <el-button link @click="toRegister"> 前往注册 </el-button>
+      </el-form-item>
+    </el-form>
+  </div>
 </template>
 <style lang="scss" scoped>
+.login-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: #f5f7fa;
+
+  .login-bg {
+    float: left;
+    width: 40%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .login-form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 400px;
+
+    h2 {
+      margin-bottom: 20px;
+      text-align: center;
+      color: #333;
+    }
+
+    .el-form-item {
+      margin-bottom: 20px;
+    }
+
+    .el-button {
+      width: 100%;
+      margin-top: 10px;
+    }
+  }
+}
 </style>

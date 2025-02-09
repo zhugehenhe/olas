@@ -7,9 +7,9 @@
       <div class="post_info">
         <div class="post_bar_top">
           <div class="bar_content">
-            <a class="follow-nickName" :title="article.user.userName">{{ article.user.userName }}</a>
+            <a class="follow-nickName" :title="article.user.nickName">{{ article.user.nickName }}</a>
             <el-icon size="16"><Clock /></el-icon>
-            <span class="time">于&nbsp;{{ article.createTime }}&nbsp;发布</span>
+            <span class="time">于&nbsp;{{ article.createDate }}&nbsp;发布</span>
             <div class="read-count-box">
               <span> 板块：{{ article.tag }} </span>
               <el-icon size="16"><View /></el-icon>
@@ -17,6 +17,11 @@
               <el-icon size="16" @click="praise" v-if="!articlePraise.status"><Star /></el-icon>
               <el-icon size="16" @click="praise" v-else><StarFilled /></el-icon>
               <span class="read-count">点赞数{{ article.praiseLen }}</span>
+              <el-icon size="16" v-if="article.source"><Link /></el-icon>
+              <span v-if="article.source" class="read-count">
+                <a v-if="article.url" :href="article.url">{{ article.source }} </a>
+                <a>{{ article.source }} </a>
+              </span>
             </div>
           </div>
         </div>
@@ -28,8 +33,8 @@
     <div class="post_footer">
       <div class="post_footer_left">
         <a href="">
-          <img :src="article.user.avatar" :alt="article.user.userName" class="profile-img" />
-          <span class="profile-name"> {{ article.user.userName }} </span>
+          <img :src="article.user.avatar" :alt="article.user.nickName" class="profile-img" />
+          <span class="profile-name"> {{ article.user.nickName }} </span>
         </a>
       </div>
       <div class="post_footer_right">
@@ -94,18 +99,21 @@ onMounted(() => {
   width: 1200px;
   margin: 0 auto;
   position: relative;
-  padding: 0 24px 16px;
+  padding: 24px;
   background: #fff;
   border-radius: 2px 2px 0 0;
+  font-family: "Arial", sans-serif;
+  color: #333;
   .post_header {
     padding-top: 8px;
     background-color: #fff;
+    margin-bottom: 24px;
     .post_title {
-      margin-bottom: 8px;
+      margin-bottom: 16px;
       .title-article {
         font-size: 28px;
         word-wrap: break-word;
-        color: #222226;
+        color: #333;
         font-weight: 600;
         margin: 0;
         word-break: break-all;
@@ -115,16 +123,19 @@ onMounted(() => {
       position: relative;
       background: #f8f8f8;
       border-radius: 4px;
+      margin-bottom: 16px;
       .post_bar_top {
         color: #999aaa;
         width: 88%;
         display: -webkit-box;
         display: -ms-flexbox;
+        padding: 12px;
         display: flex;
         .bar_content {
           display: -webkit-box;
           display: -ms-flexbox;
           display: flex;
+          gap: 12px;
           -ms-flex-wrap: wrap;
           flex-wrap: wrap;
           -webkit-box-align: center;
@@ -132,7 +143,7 @@ onMounted(() => {
           align-items: center;
           padding-left: 12px;
           .follow-nickName {
-            color: #555666;
+            color: #007bff;
             margin-right: 20px;
             max-width: 232px;
             overflow: hidden;
@@ -145,6 +156,7 @@ onMounted(() => {
             .time {
               position: relative;
               font-size: 12px;
+              color: #999;
             }
           }
           .read-count-box {
@@ -189,6 +201,7 @@ onMounted(() => {
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex;
+      gap: 12px;
       -ms-flex-wrap: nowrap;
       flex-wrap: nowrap;
       -webkit-box-pack: justify;
@@ -238,8 +251,17 @@ onMounted(() => {
       align-items: center;
       -webkit-box-pack: end;
       -ms-flex-pack: end;
+      gap: 8px;
       justify-content: flex-end;
     }
   }
+}
+.el-icon {
+  margin-right: 8px;
+}
+
+.el-icon:hover {
+  cursor: pointer;
+  color: #007bff;
 }
 </style>

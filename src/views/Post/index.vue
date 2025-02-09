@@ -7,7 +7,7 @@
       <div class="post_info">
         <div class="post_bar_top">
           <div class="bar_content">
-            <a class="follow-nickName" :title="post.user.userName">{{ post.user.userName }}</a>
+            <a class="follow-nickName" :title="post.user.nickName">{{ post.user.nickName }}</a>
             <el-icon size="16"><Clock /></el-icon>
             <span class="time">于&nbsp;{{ post.createTime }}&nbsp;发布</span>
             <div class="read-count-box">
@@ -37,39 +37,27 @@
           </a>
         </div>
 
-        <el-input
-          v-model="textarea"
-          maxlength="1000"
-          placeholder="请输入评论"
-          show-word-limit
-          size="large"
-          :rows="4"
-          type="textarea"
-        ></el-input>
+        <el-input v-model="textarea" maxlength="1000" placeholder="请输入评论" show-word-limit size="large" :rows="4" type="textarea"></el-input>
       </div>
       <div class="comment-operate-box">
-        <el-button size="small" style="float: right; margin-top: 5px" type="primary" :disabled="disabled" @click="send"
-          >发送</el-button
-        >
+        <el-button size="small" style="float: right; margin-top: 5px" type="primary" :disabled="disabled" @click="send">发送</el-button>
       </div>
       <div class="comment-list-container">
         <div class="comment-list-box" v-for="item in comments.listData" :key="item.id">
           <ul class="comment-list">
             <li class="comment-line-box">
               <div class="comment-list-item">
-                <a class="comment-list-href" target="_blank"
-                  ><img :src="item.user.avatar" :alt="item.user.avatar" class="avatar"
-                /></a>
+                <a class="comment-list-href" target="_blank"><img :src="item.user.avatar" :alt="item.user.nickName" class="avatar" /></a>
                 <div class="right-box">
                   <div class="new-info-box clearfix">
                     <div class="comment-top">
                       <div class="user-box">
                         <a class="name-href" target="_blank">
-                          <span class="name">{{ item.user.userName }}</span>
-                          <el-tag v-if="item.user.role == 2">律师</el-tag>
+                          <span class="name">{{ item.user.nickName }}</span>
+                          <el-tag v-if="item.user.role == 1">律师</el-tag>
                         </a>
                         <span class="text" v-if="item.replyUser">回复</span
-                        ><span class="nick-name" v-if="item.replyUser">{{ item.replyUser.userName }}</span>
+                        ><span class="nick-name" v-if="item.replyUser">{{ item.replyUser.nickName }}</span>
                         <span class="date">{{ item.createTime }} </span>
                         <div class="opt-comment">
                           <el-icon size="16" @click="replyShow(item)"><ChatSquare /></el-icon
@@ -88,7 +76,7 @@
         </div>
       </div>
     </div>
-    <el-dialog :title="'回复' + toReplyName" v-model="DialogVisible" width="30%">
+    <el-dialog :title="'回复-' + toReplyName" v-model="DialogVisible" width="30%">
       <el-form :model="ask" label-width="80px">
         <el-input type="textarea" v-model="textarea" :rows="4"></el-input>
       </el-form>
@@ -107,6 +95,7 @@ import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { getPostDetail, addPostHit, addPostComment, addPostPraise, getPostPraise, getCommentList } from "../../api";
 
+const DialogVisible = ref(false);
 const toReplyName = ref("");
 const disabled = ref(true);
 const textarea = ref("");
@@ -144,10 +133,11 @@ const view = () => {
   addPostHit(postId);
 };
 const replyShow = (item) => {
-  toReplyName.value = item.user.userName;
+  toReplyName.value = item.user.nickName;
   ask.reply = item.user.id;
   ask.id = postId;
   DialogVisible.value = true;
+  console.log(ask);
 };
 const cancel = () => {
   DialogVisible.value = false;
@@ -209,41 +199,40 @@ onMounted(() => {
   width: 1200px;
   margin: 0 auto;
   position: relative;
-  padding: 0 24px 16px;
-  background: #fff;
-  border-radius: 2px 2px 0 0;
+  padding: 20px; /* 增加内边距 */
+  background: linear-gradient(180deg, #f9f9f9, #ffffff); /* 渐变背景 */
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
   .post_header {
     padding-top: 8px;
     background-color: #fff;
+
     .post_title {
-      margin-bottom: 8px;
+      margin-bottom: 20px; /* 增加标题与信息栏的间距 */
       .title-article {
-        font-size: 28px;
+        font-size: 32px;
         word-wrap: break-word;
-        color: #222226;
+        color: #333333; /* 深色标题 */
         font-weight: 600;
         margin: 0;
         word-break: break-all;
       }
     }
+
     .post_info {
       position: relative;
-      background: #f8f8f8;
+      background: #f0f0f0; /* 浅灰色背景 */
       border-radius: 4px;
+      padding: 10px 15px;
       .post_bar_top {
         color: #999aaa;
         width: 88%;
-        display: -webkit-box;
-        display: -ms-flexbox;
         display: flex;
+        align-items: center;
         .bar_content {
-          display: -webkit-box;
-          display: -ms-flexbox;
           display: flex;
-          -ms-flex-wrap: wrap;
           flex-wrap: wrap;
-          -webkit-box-align: center;
-          -ms-flex-align: center;
           align-items: center;
           padding-left: 12px;
           .follow-nickName {
@@ -260,135 +249,64 @@ onMounted(() => {
             .time {
               position: relative;
               font-size: 12px;
+              color: #777888;
             }
           }
           .read-count-box {
-            display: -webkit-box;
-            display: -ms-flexbox;
             display: flex;
-            -webkit-box-align: center;
-            -ms-flex-align: center;
             align-items: center;
+            .el-icon {
+              cursor: pointer;
+              transition: color 0.3s ease;
+              &:hover {
+                color: #ff6700; /* 悬停时变为橙色 */
+              }
+            }
           }
         }
       }
     }
   }
+
   article {
     position: relative;
     padding-top: 16px;
     margin: 20px 0;
   }
-  .post_footer {
-    display: flex;
-    -ms-flex-wrap: nowrap;
-    flex-wrap: nowrap;
-    -webkit-box-pack: justify;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    padding: 17px 24px;
-    height: 64px;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    background: #fff;
-    -webkit-box-shadow: 0 -1px 8px 0 rgba(0, 0, 0, 0.06);
-    box-shadow: 0 -1px 8px 0 rgba(0, 0, 0, 0.06);
-    border-bottom-left-radius: 2px;
-    border-bottom-right-radius: 2px;
-    margin-bottom: 8px;
-    background-color: #fff;
-    .post_footer_left {
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
-      -ms-flex-wrap: nowrap;
-      flex-wrap: nowrap;
-      -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-      justify-content: space-between;
-      -webkit-box-align: center;
-      -ms-flex-align: center;
-      align-items: center;
-      .profile-img {
-        width: 32px;
-        height: 32px;
-        border-radius: 32px;
-        border: 1px solid #f5f6f7;
-        margin-right: 8px;
-      }
-      .profile-name {
-        max-width: 160px;
-        height: 24px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        font-size: 16px;
-        font-weight: 600;
-        color: #222226;
-        line-height: 24px;
-        margin-right: 8px;
-      }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 10px;
+    .title-article {
+      font-size: 24px;
     }
-    .post_footer_right {
-      -webkit-box-flex: 1;
-      -ms-flex: 1;
-      flex: 1;
-    }
-    span {
-      margin: 0 8px;
-    }
-    .read-count-box {
-      margin: -17px 0;
-      width: 100%;
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
-      -ms-flex-wrap: nowrap;
-      flex-wrap: nowrap;
-      -webkit-box-align: center;
-      -ms-flex-align: center;
-      align-items: center;
-      -webkit-box-pack: end;
-      -ms-flex-pack: end;
-      justify-content: flex-end;
+    .post_info {
+      padding: 8px;
     }
   }
 }
+
 .post_comment {
   width: 1200px;
   margin: 20px auto;
   position: relative;
-  padding: 0 24px 16px;
+  padding: 20px; /* 增加内边距 */
   background: #fff;
-  .commment_content {
-    margin-bottom: 8px;
-    border-radius: 2px;
-    background: #fff;
-    width: 100%;
-    height: -webkit-max-content;
-    height: -moz-max-content;
-    height: max-content;
-  }
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
   .comment-edit-box {
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-pack: justify;
-    -ms-flex-pack: justify;
     justify-content: space-between;
     .user-img {
       margin-right: 8px;
       padding-top: 9px;
     }
   }
+
   .comment-list-container {
     padding-top: 12px;
     .comment-list-item {
-      display: -webkit-box;
-      display: -ms-flexbox;
       display: flex;
       width: 100%;
     }
@@ -413,24 +331,14 @@ onMounted(() => {
       .new-info-box {
         width: 100%;
         .comment-top {
-          display: -webkit-box;
-          display: -ms-flexbox;
           display: flex;
-          -webkit-box-pack: end;
-          -ms-flex-pack: end;
           justify-content: flex-end;
           margin-bottom: 4px;
           line-height: 20px;
           font-size: 14px;
           .user-box {
-            -webkit-box-flex: 1;
-            -ms-flex: 1;
             flex: 1;
-            display: -webkit-box;
-            display: -ms-flexbox;
             display: flex;
-            -webkit-box-align: center;
-            -ms-flex-align: center;
             align-items: center;
             position: relative;
             right: 0;
@@ -438,11 +346,7 @@ onMounted(() => {
             padding-right: 8px;
           }
           .name-href {
-            display: -webkit-box;
-            display: -ms-flexbox;
             display: flex;
-            -webkit-box-align: center;
-            -ms-flex-align: center;
             align-items: center;
             .name {
               display: inline-block;

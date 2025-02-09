@@ -12,6 +12,11 @@ const routes = [
 		component: () => import("@/views/login/index.vue"),
 	},
 	{
+		path: "/register",
+		name: "register",
+		component: () => import("@/views/Register/index.vue"),
+	},
+	{
 		path: "/OLAS",
 		name: "OLAS",
 		component: () => import("@/views/index.vue"),
@@ -81,6 +86,11 @@ const routes = [
 				name: "AllLawyer",
 				component: () => import("@/views/Lawyer/allLaywer.vue"),
 			},
+			{
+				path: "/OLAS/File",
+				name: "File",
+				component: () => import("@/views/File/index.vue"),
+			},
 		],
 	},
 	{
@@ -112,6 +122,32 @@ const routes = [
 			{
 				path: "/Manager/Lawyer",
 				name: "LawyerManage",
+				component: () => import("@/views/Manager/Lawyer.vue"),
+			},
+			{
+				path: "/Manager/User",
+				name: "UserManage",
+				component: () => import("@/views/Manager/User.vue"),
+			},
+			{
+				path: "/Manager/File",
+				name: "FileManage",
+				component: () => import("@/views/Manager/File.vue"),
+			},
+			{
+				path: "/Manager/Comment",
+				name: "CommentManage",
+				component: () => import("@/views/Manager/Comment.vue"),
+			},
+			{
+				path: "/Manager/EchartsData",
+				name: "Echarts",
+				component: () => import("@/views/Manager/EchartsData.vue"),
+			},
+			{
+				path: "/Manager/Map",
+				name: "Map",
+				component: () => import("@/views/Manager/ChinaMap.vue"),
 			},
 		],
 	},

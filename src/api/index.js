@@ -11,6 +11,10 @@ export const registerLawyer = (params) => request.post("/Login/RegisterLawyer", 
 
 export const getUserInfo = () => request.get("/SysUser/GetTokenUserInfo");
 
+export const getUserList = (params) => request.post("/SysUser/GetUserList", params);
+
+export const updateUserStatus = (params) => request.post("/SysUser/UpdateUserStatus", params);
+
 export const addArticle = (params) => request.post("/Article/AddArticle", params);
 
 export const addArticleHit = (params) => request.post("/Article/AddHit", params);
@@ -31,6 +35,10 @@ export const getArticleHot = (params) => request.post("/Article/GetHotArticleLis
 
 export const getLatestArticles = () => request.get("/Article/GetLatestArticles");
 export const getCommentList = (params) => request.post("/Comment/GetCommentList", params);
+
+export const getCommentPage = (params) => request.post("/Comment/GetCommentPage", params);
+
+export const deleteComment = (params) => request.delete("/Comment/DeleteComment?id=" + params);
 
 export const createConsulation = (params) => request.post("/Consultation/CreateConsultation", params);
 
@@ -81,6 +89,8 @@ export const getLawyerInfoBySection = (params) => request.post("/Lawyer/GetLawye
 export const getHotLawyer = () => request.get("/Lawyer/GetHotLawyer");
 
 export const getLawyerInfoByUser = () => request.get("/Lawyer/GetLawyerInfoByUser");
+
+export const getLawyerUser = (params) => request.post("/Lawyer/GetLawyerUser", params);
 
 export const getCount = (params) => request.post("/Lawyer/GetCount", params);
 
@@ -139,7 +149,26 @@ export const uploadFile = (params) =>
 			"Content-Type": "multipart/form-data",
 		},
 	});
+export const uploadSysFile = (params) =>
+	request.post("/File/UploadSysFile", params, {
+		headers: {
+			Accept: "application/json",
+			"Content-Type": "multipart/form-data",
+		},
+	});
+
+export const downFile = (params) => request.get("/File/DownFile?id=" + params);
+
+export const getFileList = (params) => request.post("/File/GetFileList", params);
+
+export const updateFile = (params) => request.put("/File/UpdateFile", params);
+
+export const deleteFile = (params) => request.delete("/File/DeleteFile?id=" + params);
 
 export const consulation = (params) => request.post("/Consultation/Consultation", params);
 
 export const getPostListByUserId = (params) => request.post("/Post/GetPostListByUserId", params);
+
+export const getData = (params) => request.get("/DataAnalysis/GetData?days=" + params);
+
+export const getAddress = () => request.get("/DataAnalysis/GetAddress");

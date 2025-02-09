@@ -12,23 +12,30 @@
               background-color="#262427"
               text-color="#fff"
               active-text-color="#ffd04b"
+              router
             >
-              <el-menu-item index="5">
+              <el-menu-item index="0">
                 <el-icon><House /></el-icon>
-                <span slot="title" @click="navigateTo('EchartData')">首页</span>
+                <span slot="title" route="EchartData">首页</span>
               </el-menu-item>
-              <el-menu-item index="1">
-                <el-icon><User /></el-icon>
-                <span slot="title" @click="navigateTo('UserInformation')">用户</span>
-              </el-menu-item>
+              <el-sub-menu index="1">
+                <template #title>
+                  <el-icon><User /></el-icon>
+                  <span>用户</span>
+                </template>
+                <el-menu-item-group>
+                  <el-menu-item index="1-1" route="/Manager/User">用户管理</el-menu-item>
+                  <el-menu-item index="1-2" route="/Manager/Lawyer">律师审核</el-menu-item>
+                </el-menu-item-group>
+              </el-sub-menu>
               <el-sub-menu index="2">
                 <template #title>
                   <el-icon><Menu /></el-icon>
                   <span>板块</span>
                 </template>
                 <el-menu-item-group>
-                  <el-menu-item index="2-1" @click="navigateTo('/Manager/Section')">主板块</el-menu-item>
-                  <el-menu-item index="2-2" @click="navigateTo('/Manager/SubSection')">子板块</el-menu-item>
+                  <el-menu-item index="2-1" route="/Manager/Section">主板块</el-menu-item>
+                  <el-menu-item index="2-2" route="/Manager/SubSection">子板块</el-menu-item>
                 </el-menu-item-group>
               </el-sub-menu>
               <el-sub-menu index="3">
@@ -37,24 +44,28 @@
                   <span>文章</span>
                 </template>
                 <el-menu-item-group>
-                  <el-menu-item index="3-1" @click="navigateTo('/Manager/Post')">帖子</el-menu-item>
-                  <el-menu-item index="3-2" @click="navigateTo('CommentManager')">评论</el-menu-item>
-                  <el-menu-item index="3-3" @click="navigateTo('/Manager/Article')">法律资讯</el-menu-item>
+                  <el-menu-item index="3-1" route="/Manager/Post">帖子</el-menu-item>
+                  <el-menu-item index="3-2" route="/Manager/Comment">评论</el-menu-item>
+                  <el-menu-item index="3-3" route="/Manager/Article">法律资讯</el-menu-item>
                 </el-menu-item-group>
               </el-sub-menu>
-              <el-sub-menu index="4">
+              <el-menu-item index="5">
+                <el-icon><Files /></el-icon>
+                <span slot="title" route="/Manager/File">文件管理</span>
+              </el-menu-item>
+              <el-sub-menu index="6">
                 <template #title>
-                  <i class="iconfont icon-details"></i>
+                  <el-icon><TrendCharts /></el-icon>
                   <span>数据统计</span>
                 </template>
                 <el-menu-item-group>
-                  <el-menu-item index="4-1" @click="navigateTo('AgeData')">年龄统计</el-menu-item>
-                  <el-menu-item index="4-2" @click="navigateTo('ChinaMap')">省份统计</el-menu-item>
+                  <el-menu-item index="6-1" route="/Manager/EchartsData">用户统计</el-menu-item>
+                  <el-menu-item index="6-2" route="/Manager/Map">地区统计</el-menu-item>
                 </el-menu-item-group>
               </el-sub-menu>
-              <el-menu-item index="6">
+              <el-menu-item index="7" @click="backUserLogin()">
                 <i class="iconfont icon-jinru"></i>
-                <span slot="title" @click="backUserLogin()">退出</span>
+                <span slot="title">退出</span>
               </el-menu-item>
             </el-menu>
           </el-col>
@@ -89,10 +100,6 @@ const handleClose = (key, keyPath) => {
   console.log(key, keyPath);
 };
 
-const navigateTo = (path) => {
-  router.push({ path: path });
-};
-
 const backUserLogin = () => {
   router.push({ path: "/home" });
 };
@@ -110,7 +117,6 @@ const backUserLogin = () => {
   width: 100%;
   min-width: 1600px;
   height: 100%;
-  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
 }
 .Homeindex .box1 {
   width: 1300px;
@@ -118,7 +124,6 @@ const backUserLogin = () => {
   margin: 50px auto;
   padding: 41px;
   display: flex;
-  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
 }
 .homeleft {
   width: 150px;
@@ -170,4 +175,9 @@ a {
   outline: none;
   color: #fff;
 }
+</style>
+<style>
+@import "./Css/Subhead.css";
+@import "./Css/tanchuang.css";
+@import "./Css/top2.css";
 </style>

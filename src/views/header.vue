@@ -2,7 +2,9 @@
 import { userStore } from "../store";
 const user = userStore();
 const activeIndex = ref("1");
-const handleSelect = (key, keyPath) => {};
+const handleSelect = (key, keyPath) => {
+  activeIndex.value = key;
+};
 </script>
 <template>
   <el-menu
@@ -20,7 +22,7 @@ const handleSelect = (key, keyPath) => {};
     <el-menu-item index="1" route="/home">首页</el-menu-item>
     <el-menu-item index="2" route="/OlAS/Consulation">法律咨询</el-menu-item>
     <el-menu-item index="3" route="/OLAS/AllLawyer"> 找律师 </el-menu-item>
-    <el-menu-item index="4"> 合同范本下载 </el-menu-item>
+    <el-menu-item index="4" route="/OLAS/File"> 合同范本下载 </el-menu-item>
     <el-sub-menu index="5" v-if="user.loginStatus">
       <template #title>个人中心</template>
       <el-menu-item index="5-1" route="/OLAS/UserInfo"> 我的信息 </el-menu-item>

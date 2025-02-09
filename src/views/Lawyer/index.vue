@@ -71,34 +71,33 @@ onMounted(() => {
           </div>
           <div class="profession-b">
             <div class="subtitle">专业<br />领域</div>
-            <ul
-              class="two-r item-b"
-              v-if="info.specialization"
-              v-for="item in info.specialization.split(',')"
-              :key="item"
-            >
+            <ul class="two-r item-b" v-if="info.specialization" v-for="item in info.specialization.split(',')" :key="item">
               <li class="item nowrap">{{ item }}</li>
             </ul>
           </div>
         </div>
       </div>
     </div>
-    <div>
-      <el-row style="width: 1200px; margin: 20px auto 0; background-color: #fff; padding: 20px">
+    <div class="evaluation-section">
+      <el-row :gutter="20" style="width: 1200px; margin: 20px auto 0; background-color: #fff; padding: 20px">
         <el-col :span="12">
-          <p class="b col">服务次数:{{ count.b }}</p>
+          <div class="count-b">
+            <p class="b col">服务次数: {{ count.b }}</p>
+          </div>
         </el-col>
         <el-col :span="12">
-          <p class="b col">用户评价</p>
+          <div class="count-b">
+            <p class="b col">用户评价</p>
+          </div>
         </el-col>
       </el-row>
-      <el-row
-        style="width: 1200px; margin: 0 auto; background-color: #fff; padding: 20px"
-        v-for="item in count.a"
-        :key="item.id"
-      >
-        <el-col>
-          <p class="b col">{{ item }}</p>
+      <el-row :gutter="20" style="width: 1200px; margin: 0 auto; background-color: #fff; padding: 20px">
+        <el-col :span="24">
+          <div class="reviews">
+            <div v-for="item in count.a" :key="item.id" class="review-item">
+              <p class="b col">{{ item }}</p>
+            </div>
+          </div>
         </el-col>
       </el-row>
     </div>
@@ -114,6 +113,32 @@ p {
 .col {
   margin-top: 10px;
   text-align: center;
+}
+.evaluation-section {
+  margin-top: 20px;
+  background-color: #f9fafc;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.count-b {
+  background-color: #eef5fe;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #d8e5f9;
+}
+
+.reviews {
+  margin-top: 20px;
+}
+
+.review-item {
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 4px;
+  border: 1px solid #ebeef5;
+  margin-bottom: 10px;
 }
 .container {
   padding: 50px 0 40px;

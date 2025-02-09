@@ -38,10 +38,10 @@
         </el-table-column>
         <el-table-column label="操作">
           <template #default="scope">
-            <span @click="EditNameShow(scope.row)">
+            <el-button link type="primary" @click="EditNameShow(scope.row)">
               <el-icon><Edit /></el-icon>编辑
-            </span>
-            <el-button link @click="DeleteShow(scope.row.id)">
+            </el-button>
+            <el-button type="danger" link @click="DeleteShow(scope.row.id)">
               <el-icon><Delete /></el-icon>删除
             </el-button>
           </template>
@@ -254,9 +254,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-@import "./Css/Subhead.css";
-@import "./Css/tanchuang.css";
-@import "./Css/top2.css";
 </style>
 <style>
 .pagination-center {
