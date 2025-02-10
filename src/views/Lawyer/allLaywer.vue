@@ -53,7 +53,7 @@ onMounted(() => {
       @select="handleSelect"
       :ellipsis="false"
       :default-active="activeIndex"
-      style="width: 1250px; margin: 0 auto"
+      style="width: 1450px; margin: 0 auto"
     >
       <el-sub-menu v-for="(item, index) in sections" :key="item.id" :index="index">
         <template #title>{{ item.sectionName }}</template>
@@ -62,7 +62,7 @@ onMounted(() => {
         </template>
       </el-sub-menu>
     </el-menu>
-    <div style="width: 1200px; margin: 0 auto">
+    <div style="width: 1400px; margin: 0 auto">
       <el-row :gutter="20" style="margin-top: 20px">
         <el-col :span="6" v-for="(lawyer, index) in lawyerList.listData" :key="index" style="margin-bottom: 20px">
           <el-card shadow="hover" @click="handleView(lawyer.id)">
@@ -92,9 +92,10 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .avatar {
-  width: 250px;
-  height: 250px;
+  width: 290px;
+  height: 290px;
   object-fit: cover;
+  margin: 0 auto;
   border-radius: 5px;
 }
 

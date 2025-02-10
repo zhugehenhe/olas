@@ -313,7 +313,7 @@ onUnmounted(() => {
 
 <style scoped>
 .DetailNewsbox {
-  width: 800px;
+  width: 1000px;
   height: 600px;
   overflow-x: hidden;
   overflow-y: auto;

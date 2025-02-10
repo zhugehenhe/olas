@@ -80,6 +80,8 @@ export const addLawyerPraise = (params) => request.post("/Lawyer/AddPraise", par
 
 export const approve = (params) => request.put("/Lawyer/Approve", params);
 
+export const refuse = (params) => request.put("/Lawyer/Refuse", params);
+
 export const getLawyerInfo = (params) => request.get("/Lawyer/GetLawyerInfo?id=" + params);
 
 export const getHotLawyerBySection = (params) => request.get("/Lawyer/GetHotLawyerBySection?SectionId=" + params);

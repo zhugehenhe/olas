@@ -1,5 +1,6 @@
 <template>
   <div class="register">
+    <h1 class="system-title">在线法律咨询系统</h1>
     <div class="register-container">
       <el-tabs v-model="activeTab" type="card">
         <el-tab-pane label="注册普通用户" name="user">
@@ -218,8 +219,15 @@ const toLogin = () => {
   height: 100vh;
   background-image: linear-gradient(to bottom, #fff1eb, #ace0f9);
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column; /* 修改为列布局 */
+  justify-content: flex-start; /* 使内容从顶部开始 */
+  align-items: center; /* 水平居中 */
+}
+
+.system-title {
+  margin-top: 100px; /* 根据需要调整标题与顶部的距离 */
+  font-size: 24px;
+  color: #303133;
 }
 
 .register-container {
@@ -229,6 +237,7 @@ const toLogin = () => {
   border: 1px solid #ebeef5;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 20px; /* 根据需要调整表单与标题的距离 */
 }
 
 .el-form-item {

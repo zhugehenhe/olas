@@ -22,9 +22,9 @@
           <el-option :value="5" label="点击数"></el-option>
         </el-select>
       </div>
-      <div v-if="ifmian" style="width: 90%; height: 600px" id="main"></div>
-      <div v-if="ifAll" style="width: 90%; height: 600px" id="All"></div>
-      <div v-if="ifSingle" style="width: 90%; height: 500px" id="singleShow"></div>
+      <div v-if="ifmian" style="width: 95%; height: 700px" id="main"></div>
+      <div v-if="ifAll" style="width: 95%; height: 700px" id="All"></div>
+      <div v-if="ifSingle" style="width: 95%; height: 500px" id="singleShow"></div>
     </div>
   </div>
 </template>

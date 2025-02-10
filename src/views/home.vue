@@ -25,14 +25,7 @@ onMounted(() => {
 <template>
   <div class="top">
     <div class="siderbar">
-      <el-popover
-        placement="right"
-        :title="item.sectionName"
-        :width="400"
-        v-for="item in sections"
-        :key="item.id"
-        trigger="hover"
-      >
+      <el-popover placement="right" :title="item.sectionName" :width="400" v-for="item in sections" :key="item.id" trigger="hover">
         <template #reference>
           <div class="section">
             <div class="item_title">
@@ -40,7 +33,7 @@ onMounted(() => {
             </div>
             <div class="item_content">
               <template v-for="(child, index) in item.children" :key="child.id">
-                <span v-if="index < 4" @click="toSection(child.id)">{{ child.sectionName }}</span>
+                <span v-if="index < 5" @click="toSection(child.id)">{{ child.sectionName }}</span>
               </template>
             </div>
           </div>
@@ -64,12 +57,7 @@ onMounted(() => {
           <template v-for="(item, index) in hotArticles" :key="item.id">
             <li class="item" v-if="index > 0">
               <div class="type">{{ item.tag }}</div>
-              <router-link
-                :to="{ path: '/OLAS/Article', query: { id: item.id } }"
-                target="_blank"
-                class="link nowrap"
-                >{{ item.title }}</router-link
-              >
+              <router-link :to="{ path: '/OLAS/Article', query: { id: item.id } }" target="_blank" class="link nowrap">{{ item.title }}</router-link>
               <div class="time">{{ item.createDate.split(" ")[0] }}</div>
             </li>
           </template>
@@ -87,13 +75,7 @@ onMounted(() => {
             <a href="" target="_blank" class="name nowrap">{{ item.lawyerName }}律师</a>
             <div class="desc nowrap">{{ item.specialization }}</div>
             <div class="tel">{{ item.phone }}</div>
-            <router-link
-              :to="{ path: '/OLAS/Ask', query: { id: item.id } }"
-              rel="nofollow"
-              target="_blank"
-              class="ask-btn btn"
-              >咨询我</router-link
-            >
+            <router-link :to="{ path: '/OLAS/Ask', query: { id: item.id } }" rel="nofollow" target="_blank" class="ask-btn btn">咨询我</router-link>
           </div>
         </li>
       </ul>
@@ -106,10 +88,10 @@ onMounted(() => {
 .top {
   margin: 0px auto;
   display: flex;
-  width: 1250px;
+  width: 1600px;
   justify-content: space-between;
   .siderbar {
-    width: 320px;
+    width: 400px;
     background-color: #fff;
     border-radius: 10px;
     padding: 10px;
@@ -141,7 +123,7 @@ onMounted(() => {
     }
   }
   .article {
-    width: 580px;
+    width: 700px;
     border-radius: 10px;
     .page-top-card {
       height: 222px;
@@ -209,7 +191,7 @@ onMounted(() => {
   }
   .lawyer {
     background-color: #fff;
-    width: 300px;
+    width: 400px;
     border-radius: 6px;
     .lawyer-top {
       line-height: 86px;

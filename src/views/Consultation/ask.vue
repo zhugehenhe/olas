@@ -61,9 +61,7 @@ onMounted(() => {
           <div class="fix layer_box">
             <div class="l temp_box">
               <div class="temp">
-                <a @click="handleView(info.id)" target="_blank"
-                  ><img :src="info.coverPhoto" :alt="info.lawyerName + '律师'" class="img"
-                /></a>
+                <a @click="handleView(info.id)" target="_blank"><img :src="info.coverPhoto" :alt="info.lawyerName + '律师'" class="img" /></a>
               </div>
               <div class="txt">在线</div>
             </div>
@@ -76,12 +74,7 @@ onMounted(() => {
             </div>
           </div>
           <div class="text_box">
-            <textarea
-              name="content"
-              v-model="con.ConsultationQuestions"
-              class="textarea"
-              placeholder="请说说您的问题（500字以内）"
-            ></textarea>
+            <textarea name="content" v-model="con.ConsultationQuestions" class="textarea" placeholder="请说说您的问题（500字以内）"></textarea>
           </div>
           <input type="hidden" name="stayphone" value="1" />
           <div class="btn_tr">

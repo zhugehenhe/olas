@@ -14,9 +14,9 @@
               active-text-color="#ffd04b"
               router
             >
-              <el-menu-item index="0">
+              <el-menu-item index="0" route="/Manager/EchartsData">
                 <el-icon><House /></el-icon>
-                <span slot="title" route="EchartData">首页</span>
+                <span slot="title">首页</span>
               </el-menu-item>
               <el-sub-menu index="1">
                 <template #title>
@@ -41,7 +41,7 @@
               <el-sub-menu index="3">
                 <template #title>
                   <el-icon><Document /></el-icon>
-                  <span>文章</span>
+                  <span>社区交流</span>
                 </template>
                 <el-menu-item-group>
                   <el-menu-item index="3-1" route="/Manager/Post">帖子</el-menu-item>
@@ -49,7 +49,7 @@
                   <el-menu-item index="3-3" route="/Manager/Article">法律资讯</el-menu-item>
                 </el-menu-item-group>
               </el-sub-menu>
-              <el-menu-item index="5">
+              <el-menu-item index="5" route="/Manager/File">
                 <el-icon><Files /></el-icon>
                 <span slot="title" route="/Manager/File">文件管理</span>
               </el-menu-item>
@@ -119,9 +119,9 @@ const backUserLogin = () => {
   height: 100%;
 }
 .Homeindex .box1 {
-  width: 1300px;
-  height: 780px;
-  margin: 50px auto;
+  width: 1600px;
+  height: 850px;
+  margin: 10px auto;
   padding: 41px;
   display: flex;
 }

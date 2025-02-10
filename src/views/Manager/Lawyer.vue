@@ -9,6 +9,7 @@
           <el-option label="所有" :value="0"> </el-option>
           <el-option label="审核中" :value="1"> </el-option>
           <el-option label="审核通过" :value="2"> </el-option>
+          <el-option label="驳回" :value="3"> </el-option>
         </el-select>
       </div>
       <el-table :data="data.listData" style="width: 95%; margin: 0 auto" stripe>
@@ -23,17 +24,24 @@
         <el-table-column prop="status" label="状态">
           <template #default="scope">
             <el-text type="warning" v-if="scope.row.examineState == undefined">审核中</el-text>
-            <el-text type="success" v-if="scope.row.examineState == true">审核通过</el-text>
+            <el-text type="success" v-if="scope.row.examineState == 1">审核通过</el-text>
+            <el-text type="danger" v-if="scope.row.examineState == 2">驳回</el-text>
           </template>
         </el-table-column>
         <el-table-column prop="createTime" label="申请时间" width="200"> </el-table-column>
         <el-table-column label="操作" width="150">
           <template #default="scope">
             <el-button link type="primary" v-if="scope.row.examineState == undefined" @click="Approve(scope.row.id)">
-              <el-icon><Edit /></el-icon>批准
+              <el-icon><Edit /></el-icon>审核
             </el-button>
-            <el-button type="success" v-if="scope.row.examineState == true" link>
-              <el-icon><Hide /></el-icon>已禁用
+            <el-button type="danger" v-if="scope.row.examineState == undefined" link @click="Reject(scope.row.id)">
+              <el-icon><Close /></el-icon>驳回
+            </el-button>
+            <el-button type="success" v-if="scope.row.examineState == 1" link>
+              <el-icon><Hide /></el-icon>已审核
+            </el-button>
+            <el-button type="danger" v-if="scope.row.examineState == 2" link>
+              <el-icon><Hide /></el-icon>已驳回
             </el-button>
           </template>
         </el-table-column>
@@ -53,7 +61,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { getLawyerUser, approve } from "../../api";
+import { getLawyerUser, approve, refuse } from "../../api";
 const data = ref([]);
 const page = reactive({
   pageIndex: 1,
@@ -64,8 +72,10 @@ const page = reactive({
 });
 
 const Keylocking = ref(true);
-const detailVisible = ref(false);
-const userDetail = ref({});
+const RefuseMsg = reactive({
+  id: null,
+  reason: null,
+});
 
 const handleSizeChange = (newSize) => {
   page.pageSize = newSize;
@@ -105,7 +115,33 @@ const Approve = (id) => {
       });
     });
 };
-
+const Reject = (id) => {
+  ElMessageBox.prompt("请输入驳回原因:", "提示", {
+    confirmButtonText: "确定",
+    cancelButtonText: "取消",
+    inputPattern: /.+/,
+    inputErrorMessage: "原因不能为空",
+  })
+    .then(({ value }) => {
+      RefuseMsg.id = id;
+      RefuseMsg.reason = value;
+      refuse(RefuseMsg).then((res) => {
+        if (res.status == 200) {
+          ElMessage({
+            type: "success",
+            message: "驳回成功!",
+          });
+          GetAll();
+        }
+      });
+    })
+    .catch(() => {
+      ElMessage({
+        type: "info",
+        message: "取消驳回",
+      });
+    });
+};
 const GetAll = async () => {
   getLawyerUser(page).then((res) => {
     data.value = res.data;
@@ -119,6 +155,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
+@import "./Css/top2.css";
 .pagination-center {
   margin-top: 20px;
   display: flex;

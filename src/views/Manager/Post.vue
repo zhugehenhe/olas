@@ -55,7 +55,7 @@
         class="pagination-center"
       ></el-pagination>
     </div>
-    <el-dialog v-model="dialogFormVisible" title="帖子详情" width="60%">
+    <el-dialog v-model="dialogFormVisible" title="帖子详情" width="80%">
       <div class="post-detail">
         <h3>{{ selectedPost.title }}</h3>
         <div class="post-info">

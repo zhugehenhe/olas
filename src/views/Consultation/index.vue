@@ -96,11 +96,7 @@ watch(
             </div>
             <div class="temp_box">
               <div class="nobox">
-                <img
-                  src="//pic2.lawtimeimg.com/images/ask/fabu/v5/lawtime_user1.png?v=1737085163"
-                  alt=""
-                  class="temp"
-                />
+                <img src="//pic2.lawtimeimg.com/images/ask/fabu/v5/lawtime_user1.png?v=1737085163" alt="" class="temp" />
               </div>
             </div>
           </div>
@@ -117,11 +113,7 @@ watch(
             </div>
             <div class="temp_box">
               <div class="nobox">
-                <img
-                  src="//pic2.lawtimeimg.com/images/ask/fabu/v5/lawtime_user1.png?v=1737085163"
-                  alt=""
-                  class="temp"
-                />
+                <img src="//pic2.lawtimeimg.com/images/ask/fabu/v5/lawtime_user1.png?v=1737085163" alt="" class="temp" />
               </div>
             </div>
           </div>
@@ -158,11 +150,7 @@ watch(
             </div>
             <div class="temp_box">
               <div class="nobox">
-                <img
-                  src="//pic2.lawtimeimg.com/images/ask/fabu/v5/lawtime_user1.png?v=1737085163"
-                  alt=""
-                  class="temp"
-                />
+                <img src="//pic2.lawtimeimg.com/images/ask/fabu/v5/lawtime_user1.png?v=1737085163" alt="" class="temp" />
               </div>
             </div>
           </div>
@@ -200,11 +188,11 @@ watch(
   -ms-flex-direction: column;
   flex-direction: column;
   height: 760px;
-  width: 860px;
+  width: 1060px;
   border-radius: 20px;
   background-color: #fff;
   position: relative;
-  margin: 50px auto 0;
+  margin: 30px auto 0;
   .c_title {
     height: 50px;
     background-color: #fff;

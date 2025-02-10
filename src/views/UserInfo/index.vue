@@ -15,7 +15,7 @@ const user = JSON.parse(localStorage.getItem("userInfo"));
       <el-tab-pane label="律师信息" v-if="user.role === 1" name="LawyerUser"
         ><LawyerUser v-if="activeName === 'LawyerUser' && user.role === 1"
       /></el-tab-pane>
-      <el-tab-pane label="我的帖子" name="MyPost"><MyPost v-if="activeName === 'MyPost'"></MyPost></el-tab-pane>
+      <el-tab-pane label="我的交流" name="MyPost"><MyPost v-if="activeName === 'MyPost'"></MyPost></el-tab-pane>
       <el-tab-pane label="修改密码" name="EditPwd"><EditPwd v-if="activeName === 'EditPwd'" /></el-tab-pane>
       <el-tab-pane label="我的咨询" name="AskRecordVue"><AskRecordVue v-if="activeName === 'AskRecordVue'" /></el-tab-pane>
       <el-tab-pane label="咨询记录" v-if="user.role === 1" name="Record"><Record v-if="activeName === 'Record' && user.role === 1" /></el-tab-pane>
@@ -28,6 +28,6 @@ const user = JSON.parse(localStorage.getItem("userInfo"));
 <style lang="scss" scoped>
 .userinfo {
   margin: 0 auto;
-  width: 1300px;
+  width: 1400px;
 }
 </style>
