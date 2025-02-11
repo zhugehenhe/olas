@@ -96,7 +96,7 @@ export const getLawyerUser = (params) => request.post("/Lawyer/GetLawyerUser", p
 
 export const getCount = (params) => request.post("/Lawyer/GetCount", params);
 
-export const getLawyerPraise = (params) => request.get("/Lawyer/GetLawyerPraise?id=" + params);
+export const getLawyerPraise = (params) => request.get("/Lawyer/GetPraise?id=" + params);
 
 export const updateLawyerInfo = (params) => request.put("/Lawyer/UpdateLawyerInfo", params);
 

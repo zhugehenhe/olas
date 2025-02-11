@@ -1,16 +1,34 @@
 <script setup>
-import { getLawyerInfo, getCount } from "../../api";
+import { getLawyerInfo, getCount, getLawyerPraise, addLawyerPraise } from "../../api";
 import { useRoute } from "vue-router";
 import router from "../../router";
 const route = useRoute();
 const id = route.query.id;
 const info = ref({});
 const count = ref([]);
-
+const LawyerPraise = ref({ status: false });
 const getInfo = () => {
   getLawyerInfo(id).then((res) => {
     console.log(res);
     info.value = res.data;
+  });
+};
+const getPraise = () => {
+  getLawyerPraise(id).then((res) => {
+    if (res.data.status) {
+      LawyerPraise.value = res.data;
+    }
+  });
+};
+const praise = () => {
+  addLawyerPraise(id).then((res) => {
+    getInfo();
+    LawyerPraise.value.status = !LawyerPraise.value.status;
+    if (LawyerPraise.value.status) {
+      ElMessage.success("点赞成功");
+    } else {
+      ElMessage.success("取消点赞");
+    }
   });
 };
 const Ask = () => {
@@ -24,6 +42,7 @@ onMounted(() => {
   getCount(id).then((res) => {
     count.value = res.data;
   });
+  getPraise();
 });
 </script>
 <template>
@@ -55,7 +74,11 @@ onMounted(() => {
                 {{ info.address }}
               </p>
             </li>
-            <li><el-button @click="Ask" style="margin: 10px 70px">立即咨询</el-button></li>
+            <li>
+              <el-button v-if="!LawyerPraise.status" type="primary" plain @click="praise" style="margin: 10px 77px">点个赞</el-button>
+              <el-button v-else @click="praise" type="danger" plain style="margin: 10px 70px"> 取消点赞</el-button>
+            </li>
+            <li><el-button @click="Ask" type="success" style="margin: 10px 70px">立即咨询</el-button></li>
           </ul>
         </div>
         <div class="introduce-b">
@@ -80,12 +103,17 @@ onMounted(() => {
     </div>
     <div class="evaluation-section">
       <el-row :gutter="20" style="width: 1200px; margin: 20px auto 0; background-color: #fff; padding: 20px">
-        <el-col :span="12">
+        <el-col :span="8">
+          <div class="count-b">
+            <p class="b col">点赞数:{{ info.praiseLen }}</p>
+          </div>
+        </el-col>
+        <el-col :span="8">
           <div class="count-b">
             <p class="b col">服务次数: {{ count.b }}</p>
           </div>
         </el-col>
-        <el-col :span="12">
+        <el-col :span="8">
           <div class="count-b">
             <p class="b col">用户评价</p>
           </div>

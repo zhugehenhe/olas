@@ -2,14 +2,7 @@
   <h2>律师信息</h2>
   <el-form :model="lawyerForm" label-width="200px" ref="lawyerFormRef" :rules="rules">
     <el-form-item label="封面图片" :disabled="disabled" prop="coverPhoto">
-      <el-upload
-        :disabled="disabled"
-        v-loading="loading"
-        :show-file-list="false"
-        action=""
-        :http-request="upload"
-        :before-upload="beforeUploadImg"
-      >
+      <el-upload :disabled="disabled" v-loading="loading" :show-file-list="false" action="" :http-request="upload" :before-upload="beforeUploadImg">
         <el-image style="width: 100px; height: 100px" :src="lawyerForm.coverPhoto"></el-image>
       </el-upload>
     </el-form-item>
