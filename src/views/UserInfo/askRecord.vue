@@ -38,7 +38,7 @@
     >
     </el-pagination>
     <!-- 评价对话框 -->
-    <el-dialog title="评价咨询记录" v-model="reviewDialogVisible" width="30%">
+    <el-dialog title="评价咨询记录" v-model="reviewDialogVisible" width="30%" :draggable="true">
       <el-form :model="reviewForm" label-width="80px">
         <el-form-item label="评价内容">
           <el-input type="textarea" v-model="reviewForm.userReviews" :rows="4"></el-input>

@@ -123,7 +123,7 @@ watch(
             <div class="question_view" @click="toAsk(item.id)">
               <div class="content">
                 <div class="desc w320">
-                  {{ item.lawyerName }}律师 擅长领域:{{ item.specialization }}
+                  {{ item.lawyerName.substring(0, 1) }}律师 擅长领域:{{ item.specialization }}
                   <div class="nlawyer_box">
                     <div class="swiper-container nlawyer_siwper"></div>
                   </div>
@@ -131,7 +131,7 @@ watch(
               </div>
               <div class="temp_box">
                 <div class="nobox">
-                  <img :src="item.CoverPhoto" alt="" class="temp" />
+                  <img :src="item.coverPhoto" :alt="item.lawyerName.substring(0, 1) + '律师'" class="temp" />
                 </div>
               </div>
             </div>

@@ -57,17 +57,19 @@ onMounted(() => {
   <div class="order_main">
     <div class="order_w fix">
       <div class="l order_l">
-        <div class="pd">
+        <div class="pd" v-if="info.lawyerName">
           <div class="fix layer_box">
             <div class="l temp_box">
               <div class="temp">
-                <a @click="handleView(info.id)" target="_blank"><img :src="info.coverPhoto" :alt="info.lawyerName + '律师'" class="img" /></a>
+                <a @click="handleView(info.id)" target="_blank"
+                  ><img :src="info.coverPhoto" :alt="info.lawyerName.substring(0, 1) + '律师'" class="img"
+                /></a>
               </div>
               <div class="txt">在线</div>
             </div>
             <div class="t_desc">
               <div class="tl">
-                <a @click="handleView(info.id)" target="_blank">{{ info.lawyerName + "律师" }}</a>
+                <a @click="handleView(info.id)" target="_blank">{{ info.lawyerName.substring(0, 1) + "律师" }}</a>
               </div>
               <div class="info">擅长： {{ info.specialization }}</div>
               <div class="area">服务地区： 全国</div>
